@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style></style>
+    <title>vue axios</title>
+    <script src="../js/vue.js"></script>
+    <script src="../../node_modules/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <h1>网站列表</h1>
+        <div v-for="(val,key) in info">
+            {{val}}
+        </div>
+        <p v-for='(val,key) in msg'>每个值是{{val}},id是 {{val.id}},索引是{{key}},名字是{{val.name}},性别是{{val.sex}}</p>
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                // info: 1,
+                msg: [{
+                    id: 123,
+                    name: '阿达萨达三大',
+                    sex: '男'
+                }, {
+                    id: 11243,
+                    name: '王潇',
+                    sex: '男'
+                }, {
+                    id: 2423,
+                    name: '王晨兴',
+                    sex: '女'
+                }, ],
+                return: {
+                    info: null
+                }
+            },
+            mounted() {
+                const url = '127.0.0.1:3000/gross'
+                axios
+                    .get(url)
+                    .then(response => (this.info = response.data))
+                    .catch(function(error) { // 请求失败处理
+                        console.log(error);
+                    });
+            }
+        })
+    </script>
+</body>
+
+</html>
