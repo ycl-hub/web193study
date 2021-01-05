@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title></title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="http://v3f6148422.qicp.vip/css/login.css">
+    <link rel="stylesheet" href="http://v3f6148422.qicp.vip/layui/layuiTablePlug/layui/src/css/layui.css">
+    <script src="http://v3f6148422.qicp.vip/layui/layui.all.js"></script>
+    <script src="http://v3f6148422.qicp.vip/js/ajax.js"></script>
+</head>
+
+<body>
+    <div class="box">
+        <div class="sbox">
+            <div class="top">云校园</div>
+            <div class="xbox">
+                <div class="abox">
+                    <img src="http://v3f6148422.qicp.vip/img/icon/logo.png" alt="">
+                </div>
+                <div class="bbox">
+                    <div class="atop">欢迎您，请登录！</div>
+                    <div class="yhm"><input type="text" name="uname" placeholder="请输入姓名" class="inp name"></div>
+                    <div class="mima"><input type="password" name="upwd" placeholder="请输入学号/工号" class="inp upwd"></div>
+                    <div class="rbtn">
+                        <label for="check1" style="display: flex;align-items: center;">
+                            <input type="radio" id="check1" name='xx' value="xs" class="radio"><span></span>学生登录
+                        </label>
+                        <label for="check2" style="display: flex;align-items: center;">
+                            <input type="radio" id="check2" name='xx' value="js" class="radio"><span></span>教师登录
+                        </label>
+                    </div>
+                    <div class="dbtn">
+                        <button class="btn">登录</button>
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var uname = document.getElementsByClassName('name')[0]
+        var upwd = document.getElementsByClassName('upwd')[0]
+        var btn = document.getElementsByClassName('btn')[0]
+        var p = document.getElementsByTagName('p')[0]
+        var check = document.getElementsByName('xx')
+        layui.use('element', function() {
+            var element = layui.element;
+
+        });
+        btn.onclick = () => {
+            // 利用for循环判断单选按钮到底是学生登录还是教师登录
+            for (var i = 0; i < check.length; i++) {
+                //判断那个单选按钮为选中状态
+                // console.log(check[i].checked)
+                if (check[i].checked) {
+                    if (check[i].value == 'xs') {
+                        var Uname = uname.value
+                        var Uid = upwd.value
+                        console.log(Uname, Uid)
+                        if (Uname == '' || Uid == '') {
+                            layer.msg('账号或密码不能为空');
+                        } else {
+                            ajax({
+                                type: 'POST',
+                                url: 'http://v3f6148422.qicp.vip',
+                                port: '',
+                                path: '/stuLogin',
+                                data: {
+                                    uname: Uname,
+                                    upwd: Uid
+                                },
+                                success: (data) => {
+                                    console.log(data)
+                                    var info = Uname
+                                    if (data == 'yes') {
+                                        layer.msg('登录成功');
+                                        setTimeout(() => {
+                                            window.location.href = 'http://v3f6148422.qicp.vip/stu?' + info
+                                        }, 1000)
+                                    } else if (data == 'no') {
+                                        layer.msg('账号或密码错误请重新输入');
+                                    }
+                                },
+                                error: (err) => {
+                                    console.log(err)
+                                }
+
+                            })
+                        }
+
+                    } else if (check[i].value == 'js') {
+                        var Uname = uname.value
+                        var Uid = upwd.value
+                        console.log(Uname, Uid)
+                        if (Uname == '' || Uid == '') {
+                            layer.msg('账号或密码不能为空');
+                        } else {
+                            ajax({
+                                type: 'POST',
+                                url: 'http://v3f6148422.qicp.vip',
+                                port: '',
+                                path: '/adminLogin',
+                                data: {
+                                    uname: Uname,
+                                    upwd: Uid
+                                },
+                                success: (data) => {
+                                    console.log(data)
+                                    var info = Uname
+                                    if (data == 'yes') {
+                                        layer.msg('登录成功');
+                                        setTimeout(() => {
+                                            window.location.href = 'http://v3f6148422.qicp.vip/tea?' + info
+                                        }, 1000)
+                                    } else if (data == 'no') {
+                                        layer.msg('账号或密码错误请重新输入');
+                                    }
+                                },
+                                error: (err) => {
+                                    console.log(err)
+                                }
+                            })
+
+                        }
+
+                    }
+                }
+            }
+
+        }
+    </script>
+</body>
+
+</html>

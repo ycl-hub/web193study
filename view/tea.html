@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理系统</title>
+    <!-- <script src="http://v3f6148422.qicp.vip/js/ajax.js"></script> -->
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <link rel="stylesheet" href="http://v3f6148422.qicp.vip/css/tea.css">
+    <link rel="stylesheet" href="http://v3f6148422.qicp.vip/layui/layuiTablePlug/layui/src/css/layui.css">
+    <script src="http://v3f6148422.qicp.vip/layui/layuiTablePlug/layui/src/layui.js"></script>
+    <script src="http://v3f6148422.qicp.vip/js/ajax.js"></script>
+    <!-- <script src="http://v3f6148422.qicp.vip/node_modules/echarts/echarts.all.js" type="module"></script> -->
+    <script src="http://v3f6148422.qicp.vip/node_modules/echarts/dist/echarts.min.js"></script>
+</head>
+
+<body class="layui-layout-body">
+    <!-- 头部 -->
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header" style="background-color: #ffffff; box-shadow: 0 0 3px #393C49;;border-radius: 2px;">
+            <div class="layui-logo" style="color:#515151;margin-left: 1vw;"> <img src="http://v3f6148422.qicp.vip/img/icon/校标.png" alt="" style="width: 40px;height: 40px;margin-right: 0.5vw;">云校园后台管理系统</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><input type="search" placeholder="输入学生姓名查询" id="eName" class="search"> <img src="http://v3f6148422.qicp.vip/img/icon/搜索.png" id="onechar" style="width:20px;height: 20px;margin-right: 10px;"></img>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item" style="display: flex;justify-content: space-around;align-items: center;">
+                    <img src="http://v3f6148422.qicp.vip/img/icon/教师.png" alt="" style="width: 25px;height: 25px;margin-right: 5px;">
+                    <a href="" class="tea" style="color:black !important;">
+                    </a>
+                    <div id="sw">
+                        <select name="pullDown" lay-verify="" style="border: 0;">
+                        <option value="" id="swit">切换账号</option>
+                      </select>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 侧边栏-->
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll" style="background-color: #ffffff;">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test" style="background-color: #ffffff;">
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <img src="http://v3f6148422.qicp.vip/img/icon/首页.png" alt="" class="icon"> <a class="" href="#" style="color:black !important;" id="first-item">首页</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <img src="http://v3f6148422.qicp.vip/img/icon/用户.png" alt="" class="icon"> <a href="#" style="color:black !important;" class="detailon">学习概况</a>
+                    </li>
+                    <li class="layui-nav-item"><img src="http://v3f6148422.qicp.vip/img/icon/评分.png" alt="" class="icon"><a href="#" style="color:black !important;" class="markon">评分寄语</a></li>
+                    <li class="layui-nav-item"><img src="http://v3f6148422.qicp.vip/img/icon/排行.png" alt="" class="icon"><a href="#" style="color:black !important;" class="grosson">课堂得分</a></li>
+                    <li class="layui-nav-item"><img src="http://v3f6148422.qicp.vip/img/icon/后台.png" alt="" class="icon"><a href="#" style="color:black !important;" class="overOn">综合能力</a></li>
+                    <li class="layui-nav-item"><img src="http://v3f6148422.qicp.vip/img/icon/综合查询.png" alt="" class="icon"><a href="#" style="color:black !important;" class="adminon">添加教师</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body" style="background-color: #F0F3F6;" id="main">
+            <form class="layui-form" action="http://v3f6148422.qicp.vip/addStu" method="POST" enctype="multipart/form-data" style="position: absolute;top:5%;left: 20%;float: left;display: none;" id="from">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入ID</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="id" required="required" pattern="^{1,16}$" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入学号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="number" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入姓名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="name" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">请务必填写姓名</div>
+                </div>
+                <div class="layui-form-item"> <input type="file" required="required" style="position: relative;left: 10%;" name="people"><span style="color: gray;">请上传该学生照片</span></div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入性别</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="sex" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入手机号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="tel" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入QQ号</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="qq" autocomplete="off" placeholder="" class="layui-input" required="required">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入专业</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="college" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入班级</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="class" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">输入职业</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="major" autocomplete="off" placeholder="" class="layui-input">
+                    </div>
+                </div>
+                <button type="submit" class="layui-btn refer" id='submit'>立即提交</button>
+            </form>
+
+            <!-- 内容主体区域 -->
+            <div style="padding: 15px;" style="border-radius: 4%;" id='table'>
+                <!-- 学生基本信息 -->
+                <div style="display: flex;align-items: center;justify-content: space-between; background-color: #ffffff;padding-left: 5px;border-radius: 3px;position: relative;top: 8px;padding: 10px;">
+                    <h2>学生基本信息管理</h2>
+                    <div>
+                        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" id="insert">添加</button>
+                    </div>
+                </div>
+                <table class="layui-table" lay-filter="test" id='test' style="margin: 0px;">
+                </table>
+            </div>
+            <!-- echarts图表 -->
+            <div id='detail' style="display: none;">
+                <h4 class="hint">查看学生个人详细的学习情况,请在上方搜索框输入学生姓名点击搜索</h4>
+                <div style="width: 100%;display: flex;justify-content: center;">
+                    <div id="echart" style="width: 500px;height:500px;"></div>
+                    <div id="echart1" style="width:600px;height:500px;"></div>
+                </div>
+                <div class="infor" style="display: none;">
+                    <div style="padding: 30px 100px 30px 100px;line-height: 50px;">
+                        <div style="display: flex;justify-content: start;align-items: center;">
+                            <img src="http://v3f6148422.qicp.vip/img/icon/用户.png" alt="" style="width: 25px;height: 25px;display:block;margin-right: 20px;">
+                            <h2>专业课教师评价</h2>
+                        </div>
+                        <div style="text-align: center;">
+                            <textarea name="text" id="job" cols="120" rows="5" style="display: none;margin-bottom: 20px;"></textarea>
+                            <!-- display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 3;overflow: hidden; -->
+                            <p class="section" style="width: 1000px;text-align: left;"></p>
+                        </div>
+                        <div style="display: flex;justify-content: flex-end;"> <button class="submit layui-btn layui-btn-primary">提交评语</button><button class="cancel layui-btn layui-btn-primary" style="display: none;">取消</button><button style="display: none;" class="keep layui-btn layui-btn-primary">保存</button></div>
+                        <div style="display: flex;justify-content: start;align-items: center;">
+                            <img src="http://v3f6148422.qicp.vip/img/icon/用户.png" alt="" style="width: 25px;height: 25px;display:block;margin-right: 20px;">
+                            <h2>职素课教师评价</h2>
+                        </div>
+                        <div style="text-align: center;">
+                            <textarea name="text1" id="job" cols="120" rows="5" style="display: none;margin-bottom: 20px;"></textarea>
+                            <p class="section1" style="width:1000px;text-align: left;"></p>
+                        </div>
+                        <div style="display: flex;justify-content: flex-end;"> <button class="submit1 layui-btn layui-btn-primary">提交评语</button><button class="cancel1 layui-btn layui-btn-primary" style="display: none;">取消</button><button style="display: none;" class="keep1 layui-btn layui-btn-primary">保存</button></div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- 学生成绩信息-->
+            <div id="mark" style="display: none;">
+                <table class="layui-table" lay-filter="test1" id='test1'>
+                </table>
+            </div>
+            <!-- 添加管理员 -->
+            <div id="admin" style="position: relative;left:30%;top: 25%;background-color: white;width: 400px;padding: 30px 30px 30px 0px;display: none;">
+                <div class="layui-form-item center"> <label class="layui-form-label ">添加教师</label></div>
+                <div class="layui-form-item center">
+                    <div class="layui-input-inline">
+                        <input type="text " id="adminuser" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item center">
+                    <div class="layui-input-inline ">
+                        <input type="text " id="adminupwd" placeholder="请输入密码 " autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item between" style="justify-content: center;justify-content: space-around;padding-left: 4vw;">
+                    选择班级
+                    <select name="" id="Select">
+                        <option value="191">191</option>
+                        <option value="192">192</option>
+                        <option value="193">193</option>
+                        <option value="194">194</option>
+                        <option value="201">201</option>
+                        <option value="202">202</option>
+                        <option value="203">203</option>
+                        <option value="204">204</option>
+                        <option value="201">211</option>
+                        <option value="202">212</option>
+                        <option value="203">213</option>
+                        <option value="204">214</option>
+                    </select>
+                </div>
+
+                <div style="text-align: right;"> <button class="layui-btn insertadmin">保存</button></div>
+            </div>
+            <div class="gross none" style="display: none;">
+                <table class="layui-table" lay-filter="gross" id='gross'>
+                </table>
+            </div>
+            <div class="over" style="display: none;">
+
+
+                <table class="layui-table" lay-filter="over" id='over'>
+                </table>
+            </div>
+            <div class="layui-footer ">
+                <!-- 底部固定区域 -->
+
+            </div>
+        </div>
+        <script type="text/html " id="barDemo">
+            <a class="layui-btn layui-btn-checked layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+        </script>
+        <script type="text/html " id="barDemo1">
+            <a class="layui-btn layui-btn-checked layui-btn-xs" lay-event="edit">编辑</a>
+
+        </script>
+        <script>
+            //切换账户
+            var sw = document.getElementById('sw')
+            sw.onclick = () => {
+                    setTimeout(() => {
+                        window.location.href = 'http://v3f6148422.qicp.vip/'
+                    }, 500);
+                }
+                //获取登录过来的name参数
+            var num = window.location.search
+            var str = num.substr(1)
+            str = decodeURI(str)
+            var tea = document.getElementsByClassName('tea')[0]
+            tea.innerHTML = str
+                // console.log(decodeURI(str))
+            var infor = document.getElementsByClassName('infor')[0]
+            var refer = document.getElementsByClassName('refer')[0]
+            refer.onclick = () => setTimeout(() => {
+                window.location.reload()
+            }, 1000)
+            var msg = []
+            window.onload = () => {
+                    ajax({
+                        type: 'GET',
+                        url: 'http://v3f6148422.qicp.vip',
+                        path: '/insertStu1',
+                        port: '',
+                        data: {},
+                        success: (data) => {
+                            data = JSON.parse(data)
+                            msg.push(data.data)
+                        },
+                        error: (err) => {
+                            console.log(err)
+                        }
+                    })
+                }
+                // console.log(msg)
+            var First = document.getElementById('first-item')
+            var table = document.getElementById('table')
+            var detailOn = document.getElementsByClassName('detailon')[0]
+            var detail = document.getElementById('detail')
+            var markOn = document.getElementsByClassName('markon')[0]
+            var mark = document.getElementById('mark')
+            var adminOn = document.getElementsByClassName('adminon')[0]
+            var admin = document.getElementById('admin')
+            var content = document.getElementsByClassName('layui-body')[0]
+            var main = document.getElementById('main')
+            var insert = document.getElementById('insert')
+            var from = document.getElementById('from')
+            var hint = document.getElementsByClassName('hint')[0]
+            var star = document.getElementsByClassName('star')[0]
+            var grossOn = document.getElementsByClassName('grosson')[0]
+            var gross = document.getElementsByClassName('gross')[0]
+            var overOn = document.getElementsByClassName('overOn')[0]
+            var over = document.getElementsByClassName('over')[0]
+            First.onclick = function() {
+                table.style.display = 'block'
+                detail.style.display = 'none'
+                mark.style.display = 'none'
+                admin.style.display = 'none'
+                from.style.display = 'none'
+                gross.style.display = 'none'
+                over.style.display = 'none'
+            }
+            detailOn.onclick = function() {
+                table.style.display = 'none'
+                detail.style.display = 'block'
+                mark.style.display = 'none'
+                admin.style.display = 'none'
+                from.style.display = 'none'
+                gross.style.display = 'none'
+                over.style.display = 'none'
+            }
+            markOn.onclick = function() {
+                table.style.display = 'none'
+                detail.style.display = 'none'
+                mark.style.display = 'block'
+                admin.style.display = 'none'
+                from.style.display = 'none'
+                gross.style.display = 'none'
+                over.style.display = 'none'
+            }
+            adminOn.onclick = function() {
+                table.style.display = 'none'
+                detail.style.display = 'none'
+                mark.style.display = 'none'
+                admin.style.display = 'block'
+                from.style.display = 'none'
+                gross.style.display = 'none'
+                over.style.display = 'none'
+            }
+            insert.onclick = function() {
+                from.style.display = 'block'
+                table.style.display = 'none'
+                detail.style.display = 'none'
+                mark.style.display = 'none'
+                admin.style.display = 'none'
+                gross.style.display = 'none'
+                over.style.display = 'none'
+            }
+            grossOn.onclick = () => {
+                from.style.display = 'none'
+                table.style.display = 'none'
+                detail.style.display = 'none'
+                mark.style.display = 'none'
+                admin.style.display = 'none'
+                gross.style.display = 'block'
+                over.style.display = 'none'
+            }
+            overOn.onclick = () => {
+                from.style.display = 'none'
+                table.style.display = 'none'
+                detail.style.display = 'none'
+                mark.style.display = 'none'
+                admin.style.display = 'none'
+                gross.style.display = 'none'
+                over.style.display = 'block'
+            }
+            var myChart = echarts.init(document.getElementById('echart'));
+            var myChart1 = echarts.init(document.getElementById('echart1'));
+            var charStu = document.getElementById('onechar')
+            var eName = document.getElementById('eName')
+            charStu.onclick = function search(name) {
+                var submit = document.getElementsByClassName('submit')[0]
+                var keep = document.getElementsByClassName('keep')[0]
+                var text = document.getElementsByName('text')[0]
+                var section = document.getElementsByClassName('section')[0]
+                var cancel = document.getElementsByClassName('cancel')[0]
+                    /// 分割线
+                var submit1 = document.getElementsByClassName('submit1')[0]
+                var keep1 = document.getElementsByClassName('keep1')[0]
+                var text1 = document.getElementsByName('text1')[0]
+                var section1 = document.getElementsByClassName('section1')[0]
+                var cancel1 = document.getElementsByClassName('cancel1')[0]
+                var sname = eName.value
+                var result = msg[0].findIndex((v, i, a) => {
+                        return v.name == sname
+                    })
+                    // console.log(sname, result, msg)
+                if (sname == '') {
+                    layer.open({
+                        title: '提示',
+                        content: '搜索内容不能为空'
+                    });
+                } else if (result == -1) {
+                    layer.open({
+                        title: '提示',
+                        content: '查无此人'
+                    });
+                } else {
+                    hint.innerHTML = ''
+                    table.style.display = 'none'
+                    detail.style.display = 'block'
+                    mark.style.display = 'none'
+                    admin.style.display = 'none'
+                    from.style.display = 'none'
+                    ajax({
+                        type: 'POST',
+                        url: 'http://v3f6148422.qicp.vip',
+                        port: '',
+                        path: '/stuPerson',
+                        data: {
+                            name: sname
+                        },
+                        success: (data) => {
+                            data = JSON.parse(data)
+                            if (data[1].profess == '') {
+                                data[1].profess = '暂无评价'
+
+                            }
+                            if (data[1].vocat == '') {
+                                data[1].vocat = '暂无评价'
+                            }
+                            if (data[1].septconmment == '' || data[1].octconmment == '' || data[1].novconmment == '' || data[1].decconmment == '' || data[1].janconmment == '' ||
+                                data[1].septconmment == null || data[1].octconmment == null || data[1].novconmment == null || data[1].decconmment == null || data[1].janconmment == null) {
+                                data[1].septconmment = data[1].octconmment = data[1].novconmment = data[1].decconmment = data[1].janconmment = '暂无'
+                            }
+                            // console.log(data)
+                            var option = {
+                                title: {
+                                    text: data[0].class,
+                                    subtext: data[0].name + '的综合表现',
+                                    left: 'center'
+                                },
+                                tooltip: {
+                                    trigger: 'item',
+                                    formatter: '{a} <br/>{b} : {c} ({d}%)'
+                                },
+                                legend: {
+                                    left: 'center',
+                                    top: 'bottom',
+                                    data: ['专业技能', '表达能力', '学习能力', '思考力', '执行力', '领导力', '纪律', '集中力'],
+                                },
+                                toolbox: {
+                                    show: true,
+                                    feature: {
+                                        mark: {
+                                            show: true
+                                        },
+                                        dataView: {
+                                            show: true,
+                                            readOnly: false
+                                        },
+                                        magicType: {
+                                            show: true,
+                                            type: ['pie', 'funnel']
+                                        },
+                                        restore: {
+                                            show: true
+                                        },
+                                        saveAsImage: {
+                                            show: true
+                                        }
+                                    }
+                                },
+                                series: [{
+                                    name: '半径模式',
+                                    type: 'pie',
+                                    radius: [40, 160],
+                                    center: ['50%', '45%'],
+                                    roseType: 'radius',
+                                    label: {　
+                                        normal: {　　　　　　　　
+                                            "show ": false,
+                                            textStyle: {　　　　　　　　　　
+                                                "fontSize ": 10　　　　　　　　　　　　
+                                            }　　　　　　　　　　
+                                        }
+                                    },
+                                    emphasis: {
+                                        label: {
+                                            show: true
+                                        }
+                                    },
+                                    data: [{
+                                        value: data[0].skill,
+                                        name: '专业技能'
+                                    }, {
+                                        value: data[0].expression,
+                                        name: '表达能力'
+                                    }, {
+                                        value: data[0].learning,
+                                        name: '学习能力'
+                                    }, {
+                                        value: data[0].logic,
+                                        name: '思考力'
+                                    }, {
+                                        value: data[0].implement,
+                                        name: '执行力'
+                                    }, {
+                                        value: data[0].leader,
+                                        name: '领导力'
+                                    }, {
+                                        value: data[0].discripline,
+                                        name: '纪律'
+                                    }, {
+                                        value: data[0].focus,
+                                        name: '集中力'
+                                    }]
+                                }]
+                            };
+                            var option1 = {
+                                title: {
+                                    text: '学习情况'
+                                },
+                                // tooltip: {},
+                                legend: {
+                                    data: ['评分']
+                                },
+                                xAxis: {
+                                    type: 'category',
+                                    data: ['九月:' + data[1].septconmment, '十月:' + data[1].octconmment,
+                                        '十一月:' + data[1].novconmment, '十二月:' + data[1].decconmment, '一月:' + data[1].janconmment
+                                    ]
+                                },
+                                yAxis: {
+                                    type: 'value'
+                                },
+                                series: [{
+                                    name: '评分',
+                                    type: 'line',
+                                    data: [data[1].septscore, data[1].octscore, data[1].novscore, data[1].decscore, data[1].janscore, 5],
+                                    smooth: true
+                                }]
+                            };
+                            myChart.setOption(option);
+                            myChart1.setOption(option1);
+                            text.value = data[1].profess
+                            text1.value = data[1].vocat
+                            infor.style.display = 'block'
+                            section.innerHTML = data[1].profess
+                            section1.innerHTML = data[1].vocat
+                            submit.onclick = () => {
+                                var txt = text.value
+                                text.style.display = 'block'
+                                submit.style.display = 'none'
+                                keep.style.display = 'block'
+                                section.style.display = 'none'
+                                cancel.style.display = 'block'
+
+                            }
+                            keep.onclick = () => {
+                                var txt = text.value
+                                ajax({
+                                    type: 'POST',
+                                    url: 'http://v3f6148422.qicp.vip',
+                                    port: '',
+                                    path: '/changeProfess',
+                                    data: {
+                                        txt: txt,
+                                        id: data[1].id
+                                    },
+                                    success: (data) => {
+                                        if (data == 'yes') {
+                                            layer.open({
+                                                title: '提示',
+                                                content: '添加评语成功'
+                                            });
+                                        }
+                                        section.innerHTML = txt
+                                        cancel.style.display = 'none'
+                                        keep.style.display = 'none'
+                                        submit.style.display = 'block'
+                                        text.style.display = 'none'
+                                        section.style.display = 'block'
+                                    },
+                                    error: (err) => {
+                                        layer.open({
+                                            title: '提示',
+                                            content: '添加评语失败'
+                                        });
+                                    }
+                                })
+                            }
+                            cancel.onclick = () => {
+                                keep.style.display = 'none'
+                                submit.style.display = 'block'
+                                text.style.display = 'none'
+                                section.style.display = 'block'
+                                cancel.style.display = 'none'
+                            }
+                            submit1.onclick = () => {
+                                var txt = text1.value
+                                text1.style.display = 'block'
+                                submit1.style.display = 'none'
+                                keep1.style.display = 'block'
+                                section1.style.display = 'none'
+                                cancel1.style.display = 'block'
+                            }
+                            cancel1.onclick = () => {
+                                keep1.style.display = 'none'
+                                submit1.style.display = 'block'
+                                text1.style.display = 'none'
+                                section1.style.display = 'block'
+                                cancel.style.display = 'none'
+                            }
+                            keep1.onclick = () => {
+                                var txt = text1.value
+                                ajax({
+                                    type: 'POST',
+                                    url: 'http://v3f6148422.qicp.vip',
+                                    port: '',
+                                    path: '/changeVocat',
+                                    data: {
+                                        txt: txt,
+                                        id: data[1].id
+                                    },
+                                    success: (data) => {
+                                        layer.open({
+                                            title: '提示',
+                                            content: '添加评语成功'
+                                        });
+                                        section1.innerHTML = txt
+                                        keep1.style.display = 'none'
+                                        submit1.style.display = 'block'
+                                        text1.style.display = 'none'
+                                        cancel1.style.display = 'none'
+                                        section1.style.display = 'block'
+                                    },
+                                    error: (err) => {
+                                        layer.open({
+                                            title: '提示',
+                                            content: '添加评语失败'
+                                        });
+                                    }
+                                })
+
+                            }
+                        },
+                        error: (err) => {
+                            console.log(err)
+                        }
+                    })
+
+                }
+            }
+
+            // 使用刚指定的配置项和数据显示图表
+            // 指定图表的配置项和数据
+            layui.use('element', function() {
+                var element = layui.element;
+
+            });
+            layui.extend({
+                tablePlug: '/layui/layuiTablePlug'
+            }).use('table', function() {
+                var table = layui.table;
+                //学生基本信息表格
+                if (str == "宋雨涵") {
+                    table.render({
+                        elem: '#test',
+                        type: 'checkbox',
+                        initSort: {
+                            field: 'id', //排序字段，对应 cols 设定的各字段名
+                            type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+                        },
+                        //表格的高度
+                        page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                            layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'], //自定义分页布局
+                            limit: 10,
+                            limits: [10, 20, 30, 40, 50, ], //每页条数,
+                            curr: 1, //设定初始在第 5页
+                            groups: 1, //只显示 1 个连续页码
+                            first: false, //不显示首页
+                            last: false //不显示尾页
+
+                        },
+                        height: 'full-190',
+                        url: '/insertStu2', //数据接口
+                        cols: [
+                            [ //表头
+                                {
+                                    field: 'id', //这个是字段名
+                                    title: 'ID', //这个是展示出来的表头
+                                    width: 60, //表格宽度
+                                    sort: true, //是否允许排序
+                                    fixed: 'left', //固定
+                                }, {
+                                    field: 'number',
+                                    title: '学号',
+                                    width: 120,
+                                    edit: 'text'
+                                }, {
+                                    field: 'name',
+                                    title: '姓名',
+                                    width: 100,
+                                    sort: true,
+                                    edit: 'text'
+                                }, {
+                                    field: 'sex',
+                                    title: '性别',
+                                    width: 60,
+                                    edit: 'text'
+                                }, {
+                                    field: 'tel',
+                                    title: '手机号',
+                                    width: 140,
+                                    edit: 'text'
+                                }, {
+                                    field: 'qq',
+                                    title: 'QQ号',
+                                    width: 140,
+                                    sort: true,
+                                    edit: 'text'
+                                }, {
+                                    field: 'college',
+                                    title: '专业',
+                                    width: 130,
+                                    sort: true,
+                                    edit: 'text'
+                                }, {
+                                    field: 'class',
+                                    title: '班级',
+                                    width: 100,
+                                    edit: 'text'
+                                }, {
+                                    field: 'major',
+                                    title: '职业',
+                                    width: 135,
+                                    sort: true,
+                                    edit: 'text'
+                                }, {
+                                    fixed: 'right',
+                                    title: '操作',
+                                    toolbar: '#barDemo',
+                                    width: 180,
+                                    edit: 'text'
+                                }
+                            ]
+                        ]
+                    });
+
+                } else {
+                    table.render({
+                        elem: '#test',
+                        type: 'checkbox',
+                        initSort: {
+                            field: 'id', //排序字段，对应 cols 设定的各字段名
+                            type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+                        },
+                        //表格的高度
+                        page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                            layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'], //自定义分页布局
+                            limit: 10,
+                            limits: [10, 20, 30, 40, 50, ], //每页条数,
+                            curr: 1, //设定初始在第 5页
+                            groups: 1, //只显示 1 个连续页码
+                            first: false, //不显示首页
+                            last: false //不显示尾页
+
+                        },
+                        height: 'full-190',
+                        url: '/insertStu1', //数据接口
+                        cols: [
+                            [ //表头
+                                {
+                                    field: 'id', //这个是字段名
+                                    title: 'ID', //这个是展示出来的表头
+                                    width: 60, //表格宽度
+                                    sort: true, //是否允许排序
+                                    fixed: 'left', //固定
+                                }, {
+                                    field: 'number',
+                                    title: '学号',
+                                    width: 120,
+                                    edit: 'text'
+                                }, {
+                                    field: 'name',
+                                    title: '姓名',
+                                    width: 100,
+                                    sort: true,
+                                    edit: 'text'
+                                }, {
+                                    field: 'sex',
+                                    title: '性别',
+                                    width: 60,
+                                    edit: 'text'
+                                }, {
+                                    field: 'tel',
+                                    title: '手机号',
+                                    width: 140,
+                                    edit: 'text'
+                                }, {
+                                    field: 'qq',
+                                    title: 'QQ号',
+                                    width: 140,
+                                    sort: true,
+                                    edit: 'text'
+                                }, {
+                                    field: 'college',
+                                    title: '院系',
+                                    width: 130,
+                                    sort: true,
+                                    edit: 'text'
+                                }, {
+                                    field: 'class',
+                                    title: '班级',
+                                    width: 100,
+                                    edit: 'text'
+                                }, {
+                                    field: 'major',
+                                    title: '职业',
+                                    width: 135,
+                                    sort: true,
+                                    edit: 'text'
+                                }, {
+                                    fixed: 'right',
+                                    title: '操作',
+                                    toolbar: '#barDemo',
+                                    width: 180,
+                                    edit: 'text'
+                                }
+                            ]
+                        ]
+                    });
+                }
+
+                //学上综合能力表格
+                table.render({
+                    elem: '#over',
+                    type: 'checkbox',
+                    initSort: {
+                        field: 'id', //排序字段，对应 cols 设定的各字段名
+                        type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+                    },
+                    //表格的高度
+                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                        layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'], //自定义分页布局
+                        limit: 10,
+                        limits: [10, 20, 30, 40, 50, ], //每页条数,
+                        curr: 1, //设定初始在第 5页
+                        groups: 1, //只显示 1 个连续页码
+                        first: false, //不显示首页
+                        last: false //不显示尾页
+
+                    },
+                    height: 'full-190',
+                    url: '/insertStu1', //数据接口
+                    cols: [
+                        [ //表头
+                            {
+                                field: 'id', //这个是字段名
+                                title: 'ID', //这个是展示出来的表头
+                                width: 60, //表格宽度
+                                sort: true, //是否允许排序
+                                fixed: 'left', //固定
+                            }, {
+                                field: 'number',
+                                title: '学号',
+                                width: 120,
+                                edit: 'text'
+                            }, {
+                                field: 'name',
+                                title: '姓名',
+                                width: 100,
+                                sort: true,
+                                edit: 'text'
+                            }, {
+                                field: 'skill',
+                                title: '专业技能',
+                                width: 100,
+                                edit: 'text'
+                            }, {
+                                field: 'expression',
+                                title: '表达能力',
+                                width: 100,
+                                sort: true,
+                                edit: 'text'
+                            }, {
+                                field: 'learning',
+                                title: '学习能力',
+                                width: 100,
+                                edit: 'text'
+                            }, {
+                                field: 'logic',
+                                title: '思考力',
+                                width: 100,
+                                edit: 'text'
+                            }, {
+                                field: 'implement',
+                                title: '执行力',
+                                width: 100,
+                                sort: true,
+                                edit: 'text'
+                            }, {
+                                field: 'leader',
+                                title: '领导力',
+                                width: 100,
+                                sort: true,
+                                edit: 'text'
+                            }, {
+                                field: 'discripline',
+                                title: '纪律',
+                                width: 100,
+                                edit: 'text'
+                            }, {
+                                field: 'focus',
+                                title: '集中力',
+                                width: 100,
+                                sort: true,
+                                edit: 'text'
+                            }, {
+                                fixed: 'right',
+                                title: '操作',
+                                toolbar: '#barDemo1',
+                                width: 180,
+                                edit: 'text'
+                            }
+                        ]
+                    ]
+                });
+                //课堂成绩和期末成绩表格
+                table.render({
+                    elem: '#gross',
+                    type: 'checkbox',
+                    initSort: {
+                        field: 'id', //排序字段，对应 cols 设定的各字段名
+                        type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+                    },
+                    //表格的高度
+                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                        layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'], //自定义分页布局
+                        limit: 10,
+                        limits: [10, 20, 30, 40, 50, ], //每页条数,
+                        curr: 1, //设定初始在第 5页
+                        groups: 1, //只显示 1 个连续页码
+                        first: false, //不显示首页
+                        last: false //不显示尾页
+                    },
+                    height: 'full-190',
+                    url: '/gross', //数据接口
+                    cols: [
+                        [ //表头
+                            {
+                                field: 'id', //这个是字段名
+                                title: 'ID', //这个是展示出来的表头
+                                width: 60, //表格宽度
+                                sort: true, //是否允许排序
+                                fixed: 'left', //固定
+                            }, {
+                                field: 'number',
+                                title: '学号',
+                                width: 150,
+                                edit: 'text'
+                            }, {
+                                field: 'name',
+                                title: '姓名',
+                                width: 150,
+                                sort: true,
+                                edit: 'text'
+                            }, {
+                                field: 'star',
+                                title: '星星',
+                                sort: true,
+                                width: 140,
+                                edit: 'text'
+                            }, {
+                                field: 'angular',
+                                title: 'angular',
+                                width: 140,
+                                edit: 'text'
+                            }, {
+                                field: 'node',
+                                title: 'nodejs',
+                                width: 140,
+                                sort: true,
+                                edit: 'text'
+                            }, {
+                                field: 'bootstrap',
+                                title: 'bootstrap',
+                                width: 140,
+                                sort: true,
+                                edit: 'text'
+                            }, {
+                                field: '',
+                                title: '期末总成',
+                                width: 140,
+                                templet: function(d) {
+                                    return parseInt((d.star / 1000 * 60) + ((d.angular + d.node + d.bootstrap) / 300 * 40))
+                                },
+                                sort: true,
+                                edit: 'text'
+                            }, {
+                                fixed: 'right',
+                                title: '操作',
+                                toolbar: '#barDemo',
+                                width: 180,
+                                edit: 'text'
+                            }
+                        ]
+                    ]
+                });
+                //学生成绩表格
+                table.render({
+                    elem: '#test1',
+                    type: 'checkbox',
+                    initSort: {
+                        field: 'id', //排序字段，对应 cols 设定的各字段名
+                        type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+                    },
+                    //表格的高度
+                    page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                        layout: ['limit', 'count', 'prev', 'page', 'next', 'skip'], //自定义分页布局
+                        limit: 10,
+                        limits: [10, 20, 30, 40, 50, ], //每页条数,
+                        curr: 1, //设定初始在第 5页
+                        // groups: 1, //只显示 1 个连续页码
+                        first: false, //不显示首页
+                        last: false //不显示尾页
+
+                    },
+                    height: 'full-190',
+                    url: '/searchData', //数据接口
+                    cols: [
+                        [ //表头
+                            {
+                                field: 'id', //这个是字段名
+                                title: 'ID', //这个是展示出来的表头
+                                width: 60, //表格宽度
+                                sort: true, //是否允许排序
+                                fixed: false, //固定
+                            }, {
+                                field: 'profess',
+                                title: '专业课教师评语',
+                                width: 130,
+                                fixed: false,
+                                edit: 'text'
+                            }, {
+                                field: 'vocat',
+                                title: '职业课教师评语',
+                                width: 130,
+                                fixed: false,
+                                edit: 'text'
+                            }, {
+                                field: 'septscore',
+                                title: '九月评分',
+                                width: 100,
+                                fixed: false,
+                                edit: 'text'
+                            }, {
+                                field: 'septconmment',
+                                title: '评价',
+                                width: 80,
+                                fixed: false,
+                                edit: 'text'
+                            }, {
+                                field: 'octscore',
+                                title: '十月评分',
+                                width: 100,
+                                fixed: false,
+                                edit: 'text'
+                            }, {
+                                field: 'octconmment',
+                                title: '评价',
+                                width: 80,
+                                fixed: false,
+                                edit: 'text'
+                            }, {
+                                field: 'novscore',
+                                title: '十一月评分',
+                                width: 100,
+                                fixed: false,
+                                edit: 'text'
+                            }, {
+                                field: 'novconmment',
+                                title: '评价',
+                                width: 80,
+                                fixed: false,
+                                edit: 'text'
+                            }, {
+                                fixed: 'decscore',
+                                title: '十二月评分',
+                                templet: function(d) {
+                                    return d.decscore
+                                },
+                                width: 100,
+                                fixed: false,
+                                edit: 'text'
+                            }, {
+                                field: 'decconmment',
+                                title: '评价',
+                                templet: function(d) {
+                                    return d.decconmment
+                                },
+                                width: 80,
+                                fixed: false,
+                                edit: 'text'
+                            }, {
+                                fixed: 'janscore',
+                                title: '一月评分',
+                                //d是当前选区 templet修改单元格样式
+                                templet: function(d) {
+                                    return d.janscore
+                                },
+                                width: 100,
+                                fixed: false,
+                                edit: 'text'
+                            }, {
+                                fixed: 'janconmment',
+                                title: '评价',
+                                templet: function(d) {
+                                    return d.janconmment
+                                },
+                                width: 80,
+                                fixed: false,
+                                edit: 'text'
+                            }, {
+                                fixed: 'right',
+                                title: '操作',
+                                toolbar: '#barDemo',
+                                width: 170,
+                                edit: 'text'
+                            }
+                        ]
+                    ]
+                });
+                //删除
+                table.on('tool(test)', function(obj) {
+                    var data = obj.data;
+                    // console.log(obj)
+                    if (obj.event === 'del') {
+                        layer.confirm('真的要删除' + data.name + '的信息吗', function(index) {
+                            obj.del();
+                            ajax({
+                                type: 'POST',
+                                url: 'http://v3f6148422.qicp.vip',
+                                port: '',
+                                path: '/del',
+                                data: {
+                                    sid: data.id,
+                                    sname: data.name
+                                },
+                                success: (data) => {
+                                    console.log(data)
+                                },
+                                error: (err) => {
+                                    console.log(err)
+                                }
+                            })
+                            layer.close(index);
+                            // console.log(index)
+                        });
+                    } else if (obj.event === 'edit') {
+                        layer.confirm('直接点击学生信息即可编辑', function(index) {
+                            layer.close(index);
+                        })
+                    }
+                });
+
+                //编辑的操作
+                table.on('edit(test)', function(obj) {
+                    var value = obj.value, //得到修改后的值                  
+                        data = obj.data, //得到所在行所有键值
+                        field = obj.field; //得到字段
+                    layer.msg('[学生: ' + data.name + '的] ' + field + ' 更改为：' + value);
+                    ajax({
+                        type: 'POST',
+                        url: 'http://v3f6148422.qicp.vip',
+                        port: '',
+                        path: '/updateBase',
+                        data: {
+                            sid: data.id,
+                            number: data.number,
+                            name: data.name,
+                            sex: data.sex,
+                            tel: data.tel,
+                            qq: data.qq,
+                            college: data.college,
+                            class: data.class,
+                            major: data.major,
+                        },
+                        success: (data) => {
+                            console.log(data)
+                        },
+                        error: (err) => {
+                            console.log(err)
+                        }
+                    })
+                    console.log(obj.data)
+                });
+
+                //对学生信息的操作
+                table.on('tool(test1)', function(obj) {
+                    var data = obj.data;
+                    if (obj.event === 'del') {
+                        layer.confirm('真的要删除id为' + data.id + '学生的信息吗', function(index) {
+                            obj.del();
+                            ajax({
+                                type: 'POST',
+                                url: 'http://v3f6148422.qicp.vip',
+                                port: '',
+                                path: '/teadel',
+                                data: {
+                                    sid: data.id,
+                                },
+                                success: (data) => {
+                                    console.log(data)
+                                },
+                                error: (err) => {
+                                    console.log(err)
+                                }
+                            })
+                            layer.close(index);
+                            // console.log(index)
+                        });
+                    } else if (obj.event === 'edit') {
+                        layer.confirm('直接点击学生信息即可编辑', function(index) {
+                            layer.close(index);
+                        })
+                    }
+                });
+                //编辑的操作
+                table.on('edit(test1)', function(obj) {
+                    var value = obj.value, //得到修改后的值                  
+                        data = obj.data, //得到所在行所有键值
+                        field = obj.field; //得到字段
+                    layer.msg('[学生: ' + data.id + '的] ' + field + ' 更改为：' + value);
+                    ajax({
+                        type: 'POST',
+                        url: 'http://v3f6148422.qicp.vip',
+                        port: '',
+                        path: '/updatescore',
+                        data: {
+                            sid: data.id,
+                            profess: data.profess,
+                            vocat: data.vocat,
+                            septscore: data.septscore,
+                            septconmment: data.septconmment,
+                            octscore: data.octscore,
+                            octconmment: data.octconmment,
+                            novscore: data.novscore,
+                            novconmment: data.novconmment,
+                            decscore: data.decscore,
+                            decconmment: data.decconmment,
+                            janscore: data.janscore,
+                            janconmment: data.janconmment
+                        },
+                        success: (data) => {
+                            console.log(data)
+                        },
+                        error: (err) => {
+                            console.log(err)
+                        }
+                    })
+                    console.log(obj.data)
+                });
+                table.on('edit(gross)', function(obj) {
+                    var value = obj.value, //得到修改后的值                  
+                        data = obj.data, //得到所在行所有键值
+                        field = obj.field; //得到字段
+                    console.log(data)
+                    layer.msg('[学生: ' + data.name + '的] ' + field + ' 更改为：' + value);
+                    ajax({
+                        type: 'POST',
+                        url: 'http://v3f6148422.qicp.vip',
+                        port: '',
+                        path: '/updategross',
+                        data: {
+                            id: data.id,
+                            number: data.number,
+                            name: data.name,
+                            star: data.star,
+                            angular: data.angular,
+                            node: data.node,
+                            bootstrap: data.bootstrap
+                        },
+                        success: (data) => {
+                            console.log(data)
+                        },
+                        error: (err) => {
+                            console.log(err)
+                        }
+                    })
+                    console.log(obj.data)
+                });
+                table.on('tool(gross)', function(obj) {
+                    var data = obj.data;
+                    // console.log(obj)
+                    if (obj.event === 'del') {
+                        layer.confirm('真的要删除' + data.name + '的信息吗', function(index) {
+                            obj.del();
+                            // ajax({
+                            //     type: 'POST',
+                            //     url: 'http://v3f6148422.qicp.vip',
+                            //     port: '',
+                            //     path: '/del',
+                            //     data: {
+                            //         sid: data.id,
+                            //         sname: data.name
+                            //     },
+                            //     success: (data) => {
+                            //         console.log(data)
+                            //     },
+                            //     error: (err) => {
+                            //         console.log(err)
+                            //     }
+                            // })
+                            layer.close(index);
+                            // console.log(index)
+                        });
+                    } else if (obj.event === 'edit') {
+                        layer.confirm('直接点击学生信息即可编辑', function(index) {
+                            layer.close(index);
+                        })
+                    }
+                });
+
+                //学生综合能力的修改
+                table.on('edit(over)', function(obj) {
+                    var value = obj.value, //得到修改后的值                  
+                        data = obj.data, //得到所在行所有键值
+                        field = obj.field; //得到字段
+                    layer.msg('[学生: ' + data.name + '的] ' + field + ' 更改为：' + value);
+                    ajax({
+                        type: 'POST',
+                        url: 'http://v3f6148422.qicp.vip',
+                        port: '',
+                        path: '/updateSyn',
+                        data: {
+                            skill: data.skill,
+                            expression: data.expression,
+                            learning: data.learning,
+                            logic: data.logic,
+                            implement: data.implement,
+                            leader: data.leader,
+                            discripline: data.discripline,
+                            focus: data.focus
+                        },
+                        success: (data) => {
+                            console.log(data)
+                        },
+                        error: (err) => {
+                            console.log(err)
+                        }
+                    })
+                    console.log(obj.data)
+                });
+            });
+            //添加管理员
+            var adminuser = document.getElementById('adminuser')
+            var adminupwd = document.getElementById('adminupwd')
+            var insertadmin = document.getElementsByClassName('insertadmin')[0]
+
+            insertadmin.onclick = () => {
+                var uname = adminuser.value
+                var upwd = adminupwd.value
+                var obj = document.getElementById('Select'); //定位id
+                var index = obj.selectedIndex; // 选中索引
+                var text = obj.options[index].text; // 选中文本
+                var value = obj.options[index].value; // 选中值
+                if (str != '管理者') {
+                    layer.msg('您没有权限增加管理员');
+                } else if (uname == '' || upwd == '') {
+                    layer.msg('账号或密码不能为空');
+                } else {
+                    ajax({
+                        type: 'POST',
+                        url: 'http://v3f6148422.qicp.vip',
+                        port: '',
+                        path: '/insertadmin',
+                        data: {
+                            uname: uname,
+                            upwd: upwd
+                        },
+                        success: (data) => {
+                            console.log(data)
+                            if (data == 'yes') {
+                                layer.msg('添加成功');
+                            }
+                        },
+                        error: (err) => {
+                            console.log(err)
+                        }
+                    })
+
+                }
+                console.log(uname, upwd, value)
+
+            }
+        </script>
+</body>
+
+</html>

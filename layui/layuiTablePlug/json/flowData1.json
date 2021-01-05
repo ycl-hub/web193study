@@ -1,0 +1,74 @@
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "total": 18,
+    "list": [
+      {
+        "id": 10000,
+        "username": "user-0",
+        "sex": "女",
+        "city": "北京",
+        "sign": "签名-0",
+        "experience": 0,
+        "logins": 24,
+        "birthday": "1989/01/01",
+        "wealth": 82830700,
+        "classify": "作家",
+        "score": 57
+      },
+      {
+        "id": 10001,
+        "username": "user-1",
+        "sex": "男",
+        "city": "广州",
+        "sign": "签名-1",
+        "experience": 884,
+        "birthday": "1989/01/01",
+        "logins": 58,
+        "wealth": 64928690,
+        "classify": "词人",
+        "score": 27
+      },
+      {
+        "id": 10002,
+        "username": "user-2",
+        "sex": "女",
+        "city": "天津",
+        "sign": "签名-2",
+        "experience": 650,
+        "birthday": "1989/01/01",
+        "logins": 77,
+        "wealth": 6298078,
+        "classify": "酱油",
+        "score": 31
+      },
+      {
+        "id": 10003,
+        "username": "user-3",
+        "sex": "女",
+        "city": "上海",
+        "sign": "签名-3",
+        "experience": 362,
+        "birthday": "1989/01/01",
+        "logins": 157,
+        "wealth": 37117017,
+        "classify": "诗人",
+        "score": 68
+      },
+      {
+        "id": 10004,
+        "username": "user-4",
+        "sex": "男",
+        "city": "城市-4",
+        "sign": "签名-4",
+        "experience": 807,
+        "birthday": "1989/01/01",
+        "logins": 51,
+        "wealth": 76263262,
+        "classify": "作家",
+        "score": 6
+      }
+    ]
+  }
+}

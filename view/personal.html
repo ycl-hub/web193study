@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心</title>
+    <style>
+        ul {
+            list-style: none;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        li {
+            height: 15vw;
+            line-height: 15vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        li p {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+        }
+        
+        p {
+            color: grey;
+        }
+    </style>
+    <link rel="stylesheet" href="http://v3f6148422.qicp.vip/layui/layuiTablePlug/layui/src/css/layui.css">
+    <script src="http://v3f6148422.qicp.vip/layui/layuiTablePlug/layui/src/layui.js"></script>
+    <script src="http://v3f6148422.qicp.vip/js/ajax.js"></script>
+</head>
+
+<body style="background-color: #ECECEC;">
+    <div style="background-color: #49CED0;color:#ffffff;padding-left: 15vw;height: 13vw;line-height: 13vw;display: flex;align-items: center;">
+        <img src="http://v3f6148422.qicp.vip/img/mobile/白色返回.png" alt="" style="position: absolute;left: 5vw;top: 3vw;width: 6vw;height:6vw;color: white;" class="cancel">
+        <span style="background-color: #ffffff;height: 6vw;width: 1px;margin-right: 5vw;"></span>
+        <h2>个人资料</h2>
+    </div>
+    <div class="matter" style="position: absolute;top: 50%;left:40%;margin: auto;display: none;background-color: #ECECEC;border-radius: 2vw;
+    padding: 3vw 3vw;">
+
+    </div>
+    <ul style="background-color: #ffffff;">
+
+    </ul>
+    <script>
+        var url = window.location //获取前一个页面传递的参数
+        var str = url.search.substring(1)
+        str = decodeURI(str) //decodeURI()这个方法是用来解决获取到的search参数中文百分号乱码问题
+            // console.log(decodeURI(str))
+        var uname = str
+        var ul = document.getElementsByTagName('ul')[0]
+        var cancel = document.getElementsByClassName('cancel')[0]
+        cancel.onclick = () => {
+            window.location.href = `http://v3f6148422.qicp.vip/stu?${uname}`
+        }
+        var matter = document.getElementsByClassName('matter')[0]
+        window.onload = () => {
+            ajax({
+                type: 'POST',
+                url: 'http://v3f6148422.qicp.vip',
+                path: '/stuPerson',
+                port: '',
+                data: {
+                    name: uname
+                },
+                success: (data) => {
+                    data = JSON.parse(data)
+                    if (data[1].profess == '') {
+                        data[1].profess = '暂无评价'
+
+                    }
+                    if (data[1].vocat == '') {
+                        data[1].vocat = '暂无评价'
+                    }
+                    console.log(data)
+                    ul.innerHTML = `
+                        <li>
+                            <h2 style="margin-left:5vw;">头像</h2>
+                            <img src="${data[0].imgUrl}" alt="" style='width:8vw;height:8vw;border-radius:50%;margin-right:5vw;'>
+                            </li>
+                            <div style="width:100vw;height:1px;background:grey;"></div>
+                        <li style="padding-left: 2vw; padding-right: 2vw;"><h2>姓名</h2><p>${data[0].name}</P></li>
+                        <li style="padding-left: 2vw; padding-right: 2vw;"><h2>学号</h2><p>${data[0].number}</P></li>
+                        <li style="padding-left: 2vw; padding-right: 2vw;"><h2>学校</h2><p>河南职业技术学院</p></li>
+                        <li style="padding-left: 2vw; padding-right: 2vw;"><h2>年级</h2><p>2019级</P></li>
+                        <li style="padding-left: 2vw; padding-right: 2vw;"><h2>班级</h2><p>${data[0].class}</P></li>
+                        <li style="padding-left: 2vw; padding-right: 2vw;"><h2>院系</h2><p>${data[0].college}</P></li>
+                        <li style="padding-left: 2vw; padding-right: 2vw;"><h2>专业</h2><p>${data[0].major}</P></li>
+                            <li style="padding-left: 2vw; padding-right: 2vw;" class="show"><h2>专业课教师评语</h2><p style="width:40vw;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${data[1].profess}</P></li>
+                                <li style="padding-left: 2vw; padding-right: 2vw;" class="show"><h2>职业教师评语</h2><p style="width:40vw;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${data[1].vocat}</P></li>
+                        `
+                        // matter.innerHTML = `<p><h2>专业课教师评语</h2>${data[1].profess}</p><p><h2>职业课教师评语</h2>${data[1].vocat}</p>`
+                        // var show = document.getElementsByClassName('show')[0]
+                        // show.onmouseover = () => {
+                        //     matter.style.display = 'block'
+                        // }
+                        // show.onmouseout = (e) => {
+                        //     matter.style.display = 'none'
+
+                    // }
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

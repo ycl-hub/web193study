@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>话题</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        input {
+            border: 0;
+            width: 100vw;
+            margin-top: 5vw;
+            margin-left: 5vw;
+            font-size: 5vw;
+        }
+        
+        textarea {
+            border: 0;
+            width: 100vw;
+            margin-top: 5vw;
+            margin-left: 5vw;
+            font-size: 5vw;
+        }
+        
+        .line {
+            width: 100vw;
+            height: 1px;
+            margin: 0 auto;
+            background-color: #dbdbdb;
+            position: relative;
+            top: 2vw;
+        }
+        /* .newDetail {
+            padding-top: 10vw;
+        } */
+        
+        .fix {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .item {
+            background-color: #ffffff;
+            padding: 3vw;
+            margin: 0 1vw;
+            margin-top: 2vw;
+            border-radius: 2vw;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .content {
+            margin-top: 16vw;
+        }
+        
+        .blue {
+            color: #2c58a8;
+        }
+        
+        p {
+            color: grey;
+        }
+        
+        h2 {
+            font-weight: normal;
+        }
+        
+        h4 {
+            margin-bottom: 4vw;
+            font-weight: normal;
+        }
+    </style>
+    <script src="http://v3f6148422.qicp.vip/js/ajax.js"></script>
+</head>
+
+<body style="background-color: #ECECEC;">
+
+    <div class="detail">
+        <div style="position: fixed;top:0;width: 100%;">
+            <div style="background-color: #80CBC4;color:#ffffff;padding-left: 15vw;height: 13vw;line-height: 13vw;display: flex;align-items: center;">
+                <img src="http://v3f6148422.qicp.vip/img/mobile/白色返回.png" alt="" style="position: absolute;left: 2vw;top: 2vw;width: 8vw;height:8vw;color: white;" class="cancel">
+                <span style="background-color: #ffffff;height: 7vw;width: 1px;margin-right: 5vw;"></span>
+                <h2 style="font-weight: normal;">话题</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div style="position: fixed;bottom: 0vw;background-color: #FFFFFF;text-align: center;display: flex;align-items: center;width: 100%;
+    height: 20vw;justify-content: center;" class="send">
+        <img src="http://v3f6148422.qicp.vip/img/mobile/评论.png" alt="" style="width: 6vw;height: 6vw;margin-right: 3vw;">
+        <h3 style="color: #80CBC4;">发起新话题</h3>
+    </div>
+    <!-- 分割线 -->
+
+    <script>
+        var url = window.location //获取前一个页面传递的参数
+        var str = url.search.substring(1)
+        str = decodeURI(str) //decodeURI()这个方法是用来解决获取到的search参数中文百分号乱码问题
+            // console.log(decodeURI(str))
+        var uname = str
+            //uname 当前学生名字
+        var cancel = document.getElementsByClassName('cancel')[0]
+        cancel.onclick = () => {
+            window.location.href = `http://v3f6148422.qicp.vip/stu?${uname}`
+        }
+
+        //获取当前时间
+        Date.prototype.Format = function(fmt) { // author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, // 月份
+                "d+": this.getDate(), // 日
+                "h+": this.getHours(), // 小时
+                "m+": this.getMinutes(), // 分
+                "s+": this.getSeconds(), // 秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+                "S": this.getMilliseconds() // 毫秒
+            };
+            if (/(y+)/.test(fmt))
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        var time = new Date().Format("yyyy-MM-dd-hh:mm:ss");
+        var send = document.getElementsByClassName('send')[0]
+        send.onclick = () => {
+            send.style.backgroundColor = '#F6F6F6'
+            setTimeout(() => {
+                send.style.backgroundColor = '#FFFFFF'
+            }, 100);
+            window.location.href = `http://v3f6148422.qicp.vip/newtopic?${uname}`
+        }
+        var content = document.getElementsByClassName('content')[0]
+
+        window.onload = () => {
+            ajax({
+                type: 'GET',
+                url: 'http://v3f6148422.qicp.vip',
+                path: '/getTopic',
+                port: '',
+                data: {},
+                success: (data) => {
+                    data = JSON.parse(data)
+                        // console.log(data)
+                    for (var i = 0; i < data.length; i++) {
+                        content.innerHTML += `<div class="item">
+                            <div class='item1'>
+                  <h2>${data[i].title}</h2>
+                  <h4>${data[i].text}</h4>
+                  <p><span>${data[i].name}</span>${data[i].time}</p>
+                  </div>
+                  </div>`
+                        item[i].id = `${data[i].time}`
+                        item1[i].id = `${data[i].time}`
+                    }
+                },
+                error: (err) => {
+
+                }
+
+            })
+        }
+
+        var content = document.getElementsByClassName('content')[0]
+        var item = document.getElementsByClassName('item')
+        var item1 = document.getElementsByClassName('item1')
+            // console.log(item)
+        content.onclick = (e) => {
+            var target = window.event.target
+            var stime = target.parentNode.id
+            console.log(target.parentNode.id)
+            console.log()
+            if (stime == '') {
+                window.location.href = `http://v3f6148422.qicp.vip/detail?${uname}&${target.id}`
+            } else {
+                window.location.href = `http://v3f6148422.qicp.vip/detail?${uname}&${stime}`
+            }
+        }
+    </script>
+</body>
+
+</html>

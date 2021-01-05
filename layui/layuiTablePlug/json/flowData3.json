@@ -1,0 +1,69 @@
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "total": 18,
+    "list": [
+      {
+        "id": 10010,
+        "username": "user-10",
+        "sex": "女",
+        "city": "城市-10",
+        "sign": "签名-10",
+        "experience": 1016,
+        "logins": 182,
+        "wealth": 71294671,
+        "classify": "诗人",
+        "score": 34
+      },
+      {
+        "id": 10011,
+        "username": "user-11",
+        "sex": "女",
+        "city": "城市-11",
+        "sign": "签名-11",
+        "experience": 492,
+        "logins": 107,
+        "wealth": 8062783,
+        "classify": "诗人",
+        "score": 6
+      },
+      {
+        "id": 10012,
+        "username": "user-12",
+        "sex": "女",
+        "city": "城市-12",
+        "sign": "签名-12",
+        "experience": 106,
+        "logins": 176,
+        "wealth": 42622704,
+        "classify": "词人",
+        "score": 54
+      },
+      {
+        "id": 10013,
+        "username": "user-13",
+        "sex": "男",
+        "city": "城市-13",
+        "sign": "签名-13",
+        "experience": 1047,
+        "logins": 94,
+        "wealth": 59508583,
+        "classify": "诗人",
+        "score": 63
+      },
+      {
+        "id": 10014,
+        "username": "user-14",
+        "sex": "男",
+        "city": "城市-14",
+        "sign": "签名-14",
+        "experience": 873,
+        "logins": 116,
+        "wealth": 72549912,
+        "classify": "词人",
+        "score": 8
+      }
+    ]
+  }
+}

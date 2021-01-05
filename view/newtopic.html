@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加新话题</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .detail {
+            background-color: #ECECEC;
+        }
+        
+        input {
+            background-color: #ECECEC;
+        }
+        
+        textarea {
+            background-color: #ECECEC;
+            margin: 0 auto;
+            padding-left: 3vw;
+            border: 0;
+            font-size: 5vw;
+        }
+    </style>
+    <script src="http://v3f6148422.qicp.vip/js/ajax.js"></script>
+</head>
+
+<body style="background-color: #ECECEC;">
+
+    <div class="detail">
+        <div style="position: fixed;top:0;width: 100%;">
+            <div style="background-color: #49CED0;color:#ffffff;padding-left: 15vw;height: 15vw;line-height: 15vw;display: flex;align-items: center;justify-content: space-between;">
+                <div style="display: flex;"> <img src="http://v3f6148422.qicp.vip/img/mobile/白色返回.png" alt="" style="position: absolute;left: 2vw;top: 3vw;width: 8vw;height:8vw;color: white;" class="cancel">
+                    <span style="background-color: #ffffff;height: 7vw;width: 1px;margin-right: 5vw;margin-top: 4vw;"></span>
+                    <h2 style="font-weight: normal;">发起话题</h2>
+                </div>
+                <button style="margin-right: 3vw;width: 20vw;height: 10vw;border-radius: 2vw;font-size: 5vw;color: #49CED0;border: 0;background-color: white;">发布</button>
+            </div>
+        </div>
+
+    </div>
+    <div style="margin-top: 20vw;text-align: center;">
+        <input type="text" placeholder="新话题标题" style="height: 10vw;font-size: 5vw;width: 90%;border: 0;margin: 0 auto;" class="newtitle">
+        <div style="width: 90%;margin: 5vw auto;height: 1px;background-color: grey;"></div>
+        <textarea name="" id="" cols="35" rows="10" placeholder="话题内容,说说你的话题内容吧！" class="newtext"></textarea>
+    </div>
+    <script>
+        var url = window.location //获取前一个页面传递的参数
+        var str = url.search.substring(1)
+        str = decodeURI(str) //decodeURI()这个方法是用来解决获取到的search参数中文百分号乱码问题
+            // console.log(decodeURI(str))
+        var uname = str
+
+        var cancel = document.getElementsByClassName('cancel')[0]
+        cancel.onclick = () => {
+                window.location.href = `http://v3f6148422.qicp.vip/topic?${uname}`
+            }
+            //获取当前时间
+        Date.prototype.Format = function(fmt) { // author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, // 月份
+                "d+": this.getDate(), // 日
+                "h+": this.getHours(), // 小时
+                "m+": this.getMinutes(), // 分
+                "s+": this.getSeconds(), // 秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+                "S": this.getMilliseconds() // 毫秒
+            };
+            if (/(y+)/.test(fmt))
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        var time = new Date().Format("yyyy-MM-dd-hh:mm:ss");
+        var btn = document.getElementsByTagName('button')[0]
+        var title = document.getElementsByClassName('newtitle')[0]
+        var text = document.getElementsByClassName('newtext')[0]
+        btn.onclick = () => {
+            title = title.value
+            text = text.value
+            ajax({
+                type: 'POST',
+                url: 'http://v3f6148422.qicp.vip',
+                path: '/insertTopic',
+                port: '',
+                data: {
+                    name: uname,
+                    title: title,
+                    time: time,
+                    text: text
+                },
+                success: (data) => {
+
+                },
+                error: (err) => {
+
+                }
+
+            })
+            window.location.href = `http://v3f6148422.qicp.vip/topic?${uname}`
+        }
+    </script>
+
+</body>
+
+</html>

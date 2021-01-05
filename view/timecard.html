@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>考勤</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        html,
+        body {
+            height: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="http://v3f6148422.qicp.vip/layui/layuiTablePlug/layui/src/css/layui.css">
+    <script src="http://v3f6148422.qicp.vip/layui/layuiTablePlug/layui/src/layui.js"></script>
+    <script src="http://v3f6148422.qicp.vip/js/ajax.js"></script>
+</head>
+
+
+<body style="display: flex;align-items: center;height: 100%;">
+    <img src="http://v3f6148422.qicp.vip/img/mobile/返回.png" alt="" style="position: fixed;left: 0;top: 0;width: 10vw;height: 10vw;" class="cancel">
+    <div style="text-align: center;background-color: #FFFFFF;box-shadow: 1px 2px 3px 3px #E4E4E4;width: 80vw;height: 50vw;border-radius: 3vw;margin: auto auto;">
+        <button class="layui-btn clock" style="margin-top: 10vw;">打卡</button>
+        <img src="http://v3f6148422.qicp.vip/img/mobile/勾.png" alt="" style="width: 15vw;height: 15vw;display: block;margin: 0 auto;display: none;" class="gou">
+        <h3></h3>
+    </div>
+    <script>
+        var cancel = document.getElementsByClassName('cancel')[0]
+        cancel.onclick = () => {
+            window.location.href = `http://v3f6148422.qicp.vip/stu?${uname}`
+        }
+        var url = window.location //获取前一个页面传递的参数
+        var str = url.search.substring(1)
+        str = decodeURI(str) //decodeURI()这个方法是用来解决获取到的search参数中文百分号乱码问题
+            // console.log(decodeURI(str))
+        var uname = str
+        var myDate = new Date()
+        var today = myDate.getDate()
+        var curren = []
+        console.log(today, myDate)
+        var btn = document.getElementsByTagName('button')[0]
+        var gou = document.getElementsByClassName('gou')[0]
+        window.onload = () => {
+            ajax({
+                type: 'POST',
+                url: 'http://v3f6148422.qicp.vip',
+                port: '',
+                path: '/curren',
+                data: {
+                    name: uname,
+                },
+                success: (data) => {
+                    data = JSON.parse(data)
+                    console.log(data)
+                    document.getElementsByTagName('h3')[0].innerHTML = '您当前的积分为:' + data[0]
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+        btn.onclick = () => {
+            ajax({
+                type: 'POST',
+                url: 'http://v3f6148422.qicp.vip',
+                port: '',
+                path: '/redo',
+                data: {
+                    name: uname,
+                },
+                success: (data) => {
+                    data = JSON.parse(data)
+                    console.log(data[0])
+                        //判断今天是否打过卡
+                    if (today - data[0] > 0) {
+                        console.log('打卡成功')
+                        ajax({
+                            type: 'POST',
+                            url: 'http://v3f6148422.qicp.vip',
+                            port: '',
+                            path: '/today',
+                            data: {
+                                today: today,
+                                name: uname
+                            },
+                            success: (data) => {
+                                console.log(data)
+                                if (data == 'yes') {
+                                    ajax({
+                                        type: 'POST',
+                                        url: 'http://v3f6148422.qicp.vip',
+                                        port: '',
+                                        path: '/timecard',
+                                        data: {
+                                            name: uname,
+                                        },
+                                        success: (data) => {
+                                            data = JSON.parse(data)
+                                            console.log(data[0])
+                                            document.getElementsByTagName('h3')[0].innerHTML = '打卡成功,您当前的积分为:' + data[0]
+                                            gou.style.display = 'block'
+                                            setTimeout(() => {
+                                                window.location.reload()
+                                            }, 1500);
+                                        },
+                                        error: (err) => {
+                                            console.log(err)
+                                        }
+                                    })
+                                }
+                            },
+                            error: (err) => {}
+                        })
+                    } else if (today - data[0] == 0) {
+                        document.getElementsByTagName('h3')[0].innerHTML = '不要重复打卡，请明天再来哦~'
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 1500);
+                    } else {
+                        ajax({
+                            type: 'POST',
+                            url: 'http://v3f6148422.qicp.vip',
+                            port: '',
+                            path: '/today',
+                            data: {
+                                today: today,
+                                name: uname
+                            },
+                            success: (data) => {
+                                console.log(data)
+                                if (data == 'yes') {
+                                    ajax({
+                                        type: 'POST',
+                                        url: 'http://v3f6148422.qicp.vip',
+                                        port: '',
+                                        path: '/timecard',
+                                        data: {
+                                            name: uname,
+                                        },
+                                        success: (data) => {
+                                            data = JSON.parse(data)
+                                            console.log(data[0])
+                                            document.getElementsByTagName('h3')[0].innerHTML = '打卡成功,您当前的积分为:' + data[0]
+                                            gou.style.display = 'block'
+                                            setTimeout(() => {
+                                                window.location.reload()
+                                            }, 1500);
+                                        },
+                                        error: (err) => {
+                                            console.log(err)
+                                        }
+                                    })
+                                }
+                            },
+                            error: (err) => {}
+                        })
+                    }
+
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+
+        // window.onload = () => {
+        //     ajax({
+        //         type: 'POST',
+        //         url: 'http://v3f6148422.qicp.vip',
+        //      
+        //         path: '/timecard',
+        //         data: {
+        //             name: uname,
+        //         },
+        //         success: (data) => {
+        //             data = JSON.parse(data)
+        //             console.log(data[0])
+        //             document.getElementsByTagName('h3')[0].innerHTML = '打卡成功,您当前的积分为:' + data[0]
+        //         },
+        //         error: (err) => {
+        //             console.log(err)
+        //         }
+        //     })
+        // }
+    </script>
+</body>
+
+</html>

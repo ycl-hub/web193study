@@ -1,0 +1,59 @@
+.icon {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 13px;
+    left: 40px;
+}
+
+li {
+    text-align: center;
+}
+
+.search {
+    border-radius: 5px;
+    border: #333333 1px solid;
+    height: 25px;
+    color: black;
+}
+
+.none {
+    display: none;
+}
+
+textarea {
+    color: grey;
+}
+
+input:focus {
+    border-style: solid;
+    border-color: #03a9f4;
+    box-shadow: 0 0 5px #03a9f4;
+}
+
+.hint {
+    margin: 10px;
+    color: grey;
+}
+
+p {
+    color: grey;
+}
+
+.warm {
+    color: #2F4554;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.layui-layout-body div layui-nav layui-nav-item .pullbg .pull:hover {
+    transform: rotateZ(360deg);
+}

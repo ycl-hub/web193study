@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .test {
+            width: 100px;
+            height: 100px;
+            /* background-image: url(http://v3f6148422.qicp.vip/img/icon/校标.png);
+            background-size: cover; */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <!-- <script src="http://v3f6148422.qicp.vip/node_modules/echarts/dist/echarts.min.js"></script> -->
+</head>
+
+<body>
+    <!-- <form action="" method="get" name="myForm">
+        <h1>用户注册</h1>
+        <input type="text" name="username" required="required" pattern="^[a-zA-Z0-9_]{4,16}$" placeholder="账号为4到16位（字母，数字，下划线）" title="账号为4到16位（字母，数字，下划线）" />
+        <input type="password" name="password1" required="required" pattern="^[a-zA-Z0-9_]{6,16}$" placeholder="请输入密码" title="密码为4到16位（字母，数字，下划线）" />
+        <input type="password" name="password2" required="required" pattern="^[a-zA-Z0-9_]{6,16}$" placeholder="请确认密码" title="密码为4到16位（字母，数字，下划线）" />
+        <input type="email" name="email" required="required" placeholder="请输入邮箱" pattern="^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+" title="请输入有效的邮箱地址" />
+        <input type="text" name="phone" required="required" placeholder="请输入手机号" pattern="^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$" title="请输入正确的手机号" />
+        <input type="submit" value="注册" ng-disabled="myForm.name.$error.required" />
+    </form> -->
+    <!-- <div style="background-color: #F4F4F4;padding: 20px;">
+        <div style="display: flex;justify-content: start;align-items: center;">
+            <img src="../img/icon/用户.png" alt="" style="width: 30px;height: 30px;display:block;">
+            <h2>专业课教师评价</h2>
+        </div>
+        <textarea name="text" id="job" cols="120" rows="10" style="display: none;"></textarea>
+        <p class="section" style="display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;width: 300px;">暂无评价</p>
+        <button class="submit">提交评语</button><button style="display: none;" class="keep">保存</button>
+        <div style="display: flex;justify-content: start;align-items: center;">
+            <img src="../img/icon/用户.png" alt="" style="width: 30px;height: 30px;display:block;">
+            <h2>职素课教师评价</h2>
+        </div>
+        <textarea name="text1" id="job" cols="120" rows="10" style="display: none;"></textarea>
+        <p class="section1" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap;width: 300px;"></p>
+        <button class="submit1">提交评语</button><button style="display: none;" class="keep1">保存</button>
+    </div> -->
+    <div class="test">22222</div>
+    <!-- <script>
+        var submit = document.getElementsByClassName('submit')[0]
+        var keep = document.getElementsByClassName('keep')[0]
+        var text = document.getElementsByName('text')[0]
+        var section = document.getElementsByClassName('section')[0]
+
+        var submit1 = document.getElementsByClassName('submit1')[0]
+        var keep1 = document.getElementsByClassName('keep1')[0]
+        var text1 = document.getElementsByName('text1')[0]
+        var section1 = document.getElementsByClassName('section1')[0]
+            // window.onload = () => {
+            //     if (text.value == '') {
+            //         text.style.display = 'none'
+            //         section.innerHTML = '暂无评价'
+            //         text.display = 'none'
+            //     }
+            // }
+        submit.onclick = () => {
+            var txt = text.value
+            text.style.display = 'block'
+            submit.style.display = 'none'
+            keep.style.display = 'block'
+            section.style.display = 'none'
+
+        }
+        keep.onclick = () => {
+            var txt = text.value
+            section.innerHTML = txt
+            keep.style.display = 'none'
+            submit.style.display = 'block'
+            text.style.display = 'none'
+            section.style.display = 'block'
+        }
+        submit1.onclick = () => {
+            var txt = text1.value
+            text1.style.display = 'block'
+            submit1.style.display = 'none'
+            keep1.style.display = 'block'
+            section1.style.display = 'none'
+
+        }
+        keep1.onclick = () => {
+            var txt = text1.value
+            section1.innerHTML = txt
+            keep1.style.display = 'none'
+            submit1.style.display = 'block'
+            text1.style.display = 'none'
+            section1.style.display = 'block'
+        }
+    </script> -->
+    <div id="main" style="width: 100%;height:60vw;display: none;">11</div>
+    <script>
+        var test = document.getElementsByClassName('test')[0]
+        test.onmouseover = () => {
+                alert('111')
+            }
+            // // 基于准备好的dom，初始化echarts实例
+            // var myChart = echarts.init(document.getElementById('main'));
+
+        // // 指定图表的配置项和数据
+        // var option = {
+        //     title: {
+        //         text: '第一个 ECharts 实例'
+        //     },
+        //     tooltip: {},
+        //     legend: {
+        //         data: ['销量']
+        //     },
+        //     xAxis: {
+        //         data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        //     },
+        //     yAxis: {},
+        //     series: [{
+        //         name: '销量',
+        //         type: 'bar',
+        //         data: [5, 20, 36, 10, 10, 20]
+        //     }]
+        // };
+
+        // // 使用刚指定的配置项和数据显示图表。
+        // myChart.setOption(option);
+        // console.log('%c余成林haah%c', 'background: red; font-size: 2em;', '')
+        Date.prototype.Format = function(fmt) { // author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, // 月份
+                "d+": this.getDate(), // 日
+                "h+": this.getHours(), // 小时
+                "m+": this.getMinutes(), // 分
+                "s+": this.getSeconds(), // 秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+                "S": this.getMilliseconds() // 毫秒
+            };
+            if (/(y+)/.test(fmt))
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        var time = new Date().Format("yyyy-MM-dd-hh:mm:ss");
+        // console.log(time2)
+    </script>
+</body>
+
+</html>

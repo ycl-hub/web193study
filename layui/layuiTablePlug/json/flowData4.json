@@ -1,0 +1,45 @@
+{
+  "code": 0,
+  "msg": "",
+  "data": {
+    "total": 18,
+    "list": [
+      {
+        "id": 10015,
+        "username": "user-15",
+        "sex": "女",
+        "city": "城市-15",
+        "sign": "签名-15",
+        "experience": 1068,
+        "logins": 27,
+        "wealth": 52737025,
+        "classify": "作家",
+        "score": 28
+      },
+      {
+        "id": 10016,
+        "username": "user-16",
+        "sex": "女",
+        "city": "城市-16",
+        "sign": "签名-16",
+        "experience": 862,
+        "logins": 168,
+        "wealth": 37069775,
+        "classify": "酱油",
+        "score": 86
+      },
+      {
+        "id": 10017,
+        "username": "user-17",
+        "sex": "女",
+        "city": "城市-17",
+        "sign": "签名-17",
+        "experience": 1060,
+        "logins": 187,
+        "wealth": 66099525,
+        "classify": "作家",
+        "score": 69
+      }
+    ]
+  }
+}

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>评论区</title>
+    <script src="http://v3f6148422.qicp.vip/js/ajax.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .content {
+            margin-top: 16vw;
+        }
+        
+        .item {
+            background-color: #ffffff;
+            padding: 3vw;
+            margin: 0 1vw;
+            margin-top: 2vw;
+            display: flex;
+            border-radius: 2vw;
+            flex-direction: column;
+        }
+        
+        p {
+            color: grey;
+        }
+        
+        h2 {
+            font-weight: normal;
+        }
+        
+        h4 {
+            margin-bottom: 4vw;
+            font-weight: normal;
+        }
+        
+        .addcommit {
+            background-color: #49CED0;
+            color: #ffffff;
+            border-radius: 2vw;
+            width: 25vw;
+            height: 10vw;
+            border: 0;
+        }
+        
+        .call {
+            background-color: #49CED0;
+            color: #ffffff;
+            border-radius: 2vw;
+            width: 15vw;
+            height: 10vw;
+            border: 0;
+        }
+    </style>
+</head>
+
+<body style="background-color: #ECECEC;">
+    <div class="detail">
+        <div style="position: fixed;top:0;width: 100%;">
+            <div style="background-color: #49CED0;color:#ffffff;padding-left: 15vw;height: 13vw;line-height: 13vw;display: flex;align-items: center;">
+                <img src="http://v3f6148422.qicp.vip/img/mobile/白色返回.png" alt="" style="position: absolute;left: 2vw;top: 2vw;width: 8vw;height:8vw;color: white;" class="cancel">
+                <span style="background-color: #ffffff;height: 7vw;width: 1px;margin-right: 5vw;"></span>
+                <h2 style="font-weight: normal;">话题详情</h2>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+
+    </div>
+    <h4 style="padding-left: 3vw;margin-top: 3vw;">话题讨论#</h4>
+    <div class="debate">
+
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div style="position: fixed;bottom: 0vw;background-color: #49CED0;color:#ffffff;display: flex;align-items: center;width: 100%;height: 15vw;justify-content: center;" class="add">
+        发表评论....</div>
+
+    <div style="position: fixed;top: 3vw;display: none;" class="tare"> <textarea name="" id="" cols="50" rows="10" class="utext" style="border: 0;width: 100%;border-radius: 2vw;margin: 0 1vw;"></textarea>
+
+        <div style="display:flex;justify-content: space-between;"> <button class="call">取消</button><button class="addcommit">发表评论</button></div>
+    </div>
+
+</body>
+<script>
+    var url = window.location //获取前一个页面传递的参数
+    var str = url.search.substring(1)
+    str = decodeURI(str) //decodeURI()这个方法是用来解决获取到的search参数中文百分号乱码问题
+        // console.log(decodeURI(str))
+    var uname = str.match(/(\S*)&/)[1]
+    var utime = str.match(/&(\S*)/)[1]
+        //获取当前时间
+    Date.prototype.Format = function(fmt) { // author: meizz
+        var o = {
+            "M+": this.getMonth() + 1, // 月份
+            "d+": this.getDate(), // 日
+            "h+": this.getHours(), // 小时
+            "m+": this.getMinutes(), // 分
+            "s+": this.getSeconds(), // 秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+            "S": this.getMilliseconds() // 毫秒
+        };
+        if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+    var time = new Date().Format("yyyy-MM-dd-hh:mm:ss");
+    console.log(utime)
+    var cancel = document.getElementsByClassName('cancel')[0]
+    cancel.onclick = () => {
+        window.location.href = `http://v3f6148422.qicp.vip/topic?${uname}`
+    }
+    var content = document.getElementsByClassName('content')[0]
+    var debate = document.getElementsByClassName('debate')[0]
+    var detail = document.getElementsByClassName('detail')[0]
+    window.onload = () => {
+            ajax({
+                type: 'POST',
+                url: 'http://v3f6148422.qicp.vip',
+                path: '/queryTopic',
+                port: '',
+                data: {
+                    time: utime
+                },
+                success: (data) => {
+                    data = JSON.parse(data)
+                    console.log(data)
+                    content.innerHTML = `<div class="item">
+                  <h2>${data[0].title}</h2>
+                  <h4>${data[0].text}</h4>
+                  <p><span>${data[0].name}</span>${data[0].time}</p>
+                  </div>`
+                    console.log(data)
+                    ajax({
+                        type: 'POST',
+                        url: 'http://v3f6148422.qicp.vip',
+                        path: '/getComment',
+                        port: '',
+                        data: {
+                            time: utime
+                        },
+                        success: (data) => {
+                            data = JSON.parse(data)
+                            console.log(data[0])
+                            for (var i = 0; i < data.length; i++) {
+                                debate.innerHTML += `<div class="item">
+                  <h4>${data[i].uname}&nbsp;${i+1}楼</h4>
+                  <p>${data[i].text}</p>
+                  <p>${data[i].time}</p>
+                  </div>`
+                            }
+                            console.log(data)
+                        },
+                        error: (err) => {
+
+                        }
+
+                    })
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+        //添加评论
+    var add = document.getElementsByClassName('add')[0]
+    var tare = document.getElementsByClassName('tare')[0]
+    var utext = document.getElementsByClassName('utext')[0]
+    add.onclick = () => {
+            add.style.backgroundColor = '#F6F6F6'
+            setTimeout(() => {
+                add.style.backgroundColor = '#FFFFFF'
+            }, 100);
+            add.style.display = 'none'
+            tare.style.display = 'block'
+            detail.style.display = 'none'
+            content.style.display = 'none'
+            debate.style.display = 'none'
+
+        }
+        //添加评论
+    var addcommit = document.getElementsByClassName('addcommit')[0]
+    addcommit.onclick = () => {
+            var text = utext.value
+            console.log(text)
+            ajax({
+                type: 'POST',
+                url: 'http://v3f6148422.qicp.vip',
+                path: '/addComment',
+                port: '',
+                data: {
+                    stime: utime,
+                    time: time,
+                    name: uname,
+                    text: text
+
+                },
+                success: (data) => {
+                    window.location.reload()
+                },
+                error: (err) => {
+
+                }
+
+            })
+        }
+        //取消评论
+    var call = document.getElementsByClassName('call')[0]
+    call.onclick = () => {
+        call.style.backgroundColor = '#F6F6F6'
+        setTimeout(() => {
+            add.style.backgroundColor = '#FFFFFF'
+        }, 100);
+        window.location.reload()
+    }
+</script>
+
+</html>

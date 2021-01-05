@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>课程表</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .bjs {
+            background-color: #ffffff;
+        }
+        
+        th {
+            font-size: 40px;
+        }
+        
+        .bti {
+            text-align: center;
+            color: black;
+            font-size: 70px;
+            padding-top: 50px;
+        }
+        
+        .td1 {
+            font-size: 40px;
+        }
+        
+        .td2 {
+            font-size: 20px;
+            color: black;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body class="bjs">
+    <img src="http://v3f6148422.qicp.vip/img/mobile/返回.png" alt="" style="position: fixed;left: 0;top: 0;width: 10vw;height: 10vw;" class="cancel">
+    <h1 class="bti bjs">Web193班课程表</h1>
+    <div class="table-responsive bjs">
+        <table class="table table-bordered">
+            <thead>
+                <th></th>
+                <th></th>
+                <th>星期一</th>
+                <th>星期二</th>
+                <th>星期三</th>
+                <th>星期四</th>
+                <th>星期五</th>
+            </thead>
+            <tr>
+                <td class="td1">上午</td>
+                <td class="td1">第一节</td>
+                <td class="td2">
+                    MySql数据库 朱娅楠[1-6]周 电教212网络营销实验室
+                    <br> BootStr中p应用开发 朱娅楠[7-12]周O电教212网络营销实验室
+                    <br> VUE应用程序开发 朱娅楠 [13-18]周O电教212网络营销实验室
+                </td>
+                <td class="td2">
+                    MySql数据库 朱娅楠[1-6]周 电教212网络营销实验室
+                    <br> BootStrap应用开发 朱娅楠[7-12]周 电教212网络营销实验室
+                    <br> VUE应用程序开发O朱娅楠[13-18]周 电教212网络营销实验室
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="td1">第二节</td>
+                <td class="td2">
+                    形势与政策三 胡勇[9-121周 2306
+                    <br> MySql数据库 朱娅楠[1-6]周 电教212网络营销实验室
+                    <br> BootStrap应用开发 朱娅楠[7-12]周 电教212网络营销实验室
+                </td>
+                <td class="td2">
+                    毛泽东思想和中国特色社会主义理论体系概论——吴波[1-15]周1302
+                </td>
+                <td class="td2">
+                    Web前端综合实战 朱娅楠[1-18]周 电教212网络营销实验室
+                </td>
+                <td></td>
+                <td class="td2">
+                    NodeJS应用开发 朱娅楠[1-6]周 电教212网络营销实验室
+                    <br> AngularJS框架 朱娅楠[7-12]周 电教212网络营销实验室
+                    <br> 微信开发 朱娅楠[13-18]周 电教212网络营销实验室
+
+                </td>
+            </tr>
+            <tr>
+                <td class="td1">下午</td>
+                <td class="td1">第三节</td>
+                <td class="td2">
+                    VUE应用程序开发O朱娅楠[13-18]周 电教212网络营销实验室
+                </td>
+                <td></td>
+                <td class="td2">
+                    Web前端综合实战 朱娅楠[1-18]周 电教212网络营销实验室
+                </td>
+                <td></td>
+                <td class="td2">
+                    NodeJS应用开发 朱娅楠[1-6]周 电教212网络营销实验室
+                    <br> AngulaJS框架 朱娅楠[7-12]周 电教212网络营销实验室
+                    <br> 微信开发 朱娅楠[13-18]周 电教212网络营销实验室
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="td1">第四节</td>
+                <td></td>
+                <td class="td2">
+                    NodeJS应用开发 朱娅楠[1-6]周 电教212网络营销实验室
+                    <br> AngularJS框架 朱娅楠[7-12]周 电教212网络营销实 验室
+                    <br> 微信开发 朱娅楠[13-18]周O电教212网络营销实验
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="td1">晚上</td>
+                <td class="td1">第五节</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var url = window.location //获取前一个页面传递的参数
+        var str = url.search.substring(1)
+        str = decodeURI(str) //decodeURI()这个方法是用来解决获取到的search参数中文百分号乱码问题
+            // console.log(decodeURI(str))
+        var uname = str
+        var cancel = document.getElementsByClassName('cancel')[0]
+        cancel.onclick = () => {
+            window.location.href = `http://v3f6148422.qicp.vip/stu?${uname}`
+        }
+    </script>
+</body>
+
+</html>

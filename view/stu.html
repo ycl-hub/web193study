@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云校园手机端</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <link rel="stylesheet" href="http://v3f6148422.qicp.vip/css/stu.css">
+    <script src="http://v3f6148422.qicp.vip/node_modules/echarts/dist/echarts.min.js"></script>
+    <link rel="stylesheet" href="http://v3f6148422.qicp.vip/layui/css/layui.css" media="all">
+    <script src="http://v3f6148422.qicp.vip/layui/layui.all.js"></script>
+    <script src="http://v3f6148422.qicp.vip/js/ajax.js"></script>
+    <script src="http://v3f6148422.qicp.vip/node_modules/echarts/dist/echarts.min.js"></script>
+</head>
+
+<body>
+
+    <div class="wrap">
+        <h2 class="center">云校园</h2>
+        <div class="people center"></div>
+    </div>
+    <div class="rail"></div>
+    <div class="mid">
+
+        <div class="layui-container">
+            <div class="layui-row mid">
+                <div class="layui-col-xs3">
+                    <div class="dist center total"><img src="http://v3f6148422.qicp.vip/img/mobile/考勤.png" alt="">
+                        <p>考勤签到</p>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="dist center course"><img src="http://v3f6148422.qicp.vip/img/mobile/课程表.png" alt="">
+                        <p>课程表</p>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="dist center wallet"><img src="http://v3f6148422.qicp.vip/img/mobile/钱包.png" alt="">
+                        <p>费用缴纳</p>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="dist center cause"><img src="http://v3f6148422.qicp.vip/img/mobile/统计.png" alt="">
+                        <p>技能分析</p>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row mid">
+                <div class="layui-col-xs3">
+                    <div class="dist center personal"><img src="http://v3f6148422.qicp.vip/img/mobile/个人中心.png" alt="">
+                        <p>个人中心</p>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="dist center score"><img src="http://v3f6148422.qicp.vip/img/mobile/成绩.png" alt="">
+                        <p>成绩排行</p>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="dist center express"><img src="http://v3f6148422.qicp.vip/img/mobile/班级表现.png" alt="">
+                        <p>表现</p>
+                    </div>
+                </div>
+                <div class="layui-col-xs3">
+                    <div class="dist center topic"><img src="http://v3f6148422.qicp.vip/img/mobile/话题.png" alt="">
+                        <p>话题</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rail"></div>
+
+    <div class="space">
+        <h2>校园资讯</h2>
+        <a href="https://www.hnzj.edu.cn/">更多</a>
+    </div>
+    <div class="line"></div>
+
+    <div class="item">
+        <button class="btn">资讯</button>
+        <p>音乐学院举行产教融合成果展演...</p>
+    </div>
+    <div class="line"></div>
+    <div class="item">
+        <button class="btn">资讯</button>
+        <p>省直文明办复查组来我校对省级文明校园进行年度复查...</p>
+    </div>
+    <div class="line"></div>
+    <div class="item">
+        <button class="btn">资讯</button>
+        <p>我校召开2020年河南省高等职业教育青年教师课堂教学创新大赛推进会...</p>
+    </div>
+    <div class="line"></div>
+    <div class="item">
+        <button class="btn">资讯</button>
+        <p>2020年河南省高等职业教育青年教师课堂教学创新大赛（专业课程一组）现场决赛预备会在我校召开...</p>
+    </div>
+    <div class="line"></div>
+    <div class="item">
+        <button class="btn">资讯</button>
+        <p>中国教育报：“三教”改革助推“双高”建设——河南职业技术学院教育教学改革果满枝头...</p>
+    </div>
+</body>
+<script>
+    var url = window.location //获取前一个页面传递的参数
+    var str = url.search.substring(1)
+    str = decodeURI(str) //decodeURI()这个方法是用来解决获取到的search参数中文百分号乱码问题
+        // console.log(decodeURI(str))
+    var uname = str
+    str = str.substring(str.length - 2)
+    console.log(str)
+    var section = document.getElementsByClassName('section')[0]
+    var section1 = document.getElementsByClassName('section1')[0]
+    var people = document.getElementsByClassName('people')[0]
+    people.innerHTML = str
+    people.onclick = () => {
+            window.location.href = `http://v3f6148422.qicp.vip/personal?${uname}`
+        }
+        //课表
+    var course = document.getElementsByClassName('course')[0]
+    course.onclick = () => {
+            window.location.href = `http://v3f6148422.qicp.vip/class?${uname}`
+        }
+        //成绩分析
+    var cause = document.getElementsByClassName('cause')[0]
+    cause.onclick = () => {
+            window.location.href = `http://v3f6148422.qicp.vip/echart?${uname}`
+        }
+        //考勤签到
+    var total = document.getElementsByClassName('total')[0]
+    total.onclick = () => {
+            window.location.href = `http://v3f6148422.qicp.vip/time?${uname}`
+        }
+        //费用缴纳
+    var wallet = document.getElementsByClassName('wallet')[0]
+    wallet.onclick = () => {
+            window.location.href = `http://v3f6148422.qicp.vip/wallet?${uname}`
+        }
+        //个人中心
+    var personal = document.getElementsByClassName('personal')[0]
+    personal.onclick = () => {
+            window.location.href = `http://v3f6148422.qicp.vip/personal?${uname}`
+        }
+        //成绩score
+    var score = document.getElementsByClassName('score')[0]
+    score.onclick = () => {
+        window.location.href = `http://v3f6148422.qicp.vip/score?${uname}`
+    }
+    var express = document.getElementsByClassName('express')[0]
+    express.onclick = () => {
+        window.location.href = `http://v3f6148422.qicp.vip/show?${uname}`
+    }
+    var topic = document.getElementsByClassName('topic')[0]
+    topic.onclick = () => {
+        window.location.href = `http://v3f6148422.qicp.vip/topic?${uname}`
+    }
+    var item = document.getElementsByClassName('item')
+    item[0].onclick = () => {
+        window.location.href = 'https://www.hnzj.edu.cn/info/1014/14161.htm'
+    }
+    item[1].onclick = () => {
+        window.location.href = 'https://www.hnzj.edu.cn/info/1014/14166.htm'
+    }
+    item[2].onclick = () => {
+        window.location.href = 'https://www.hnzj.edu.cn/info/1014/14157.htm'
+    }
+    item[3].onclick = () => {
+        window.location.href = 'https://www.hnzj.edu.cn/info/1014/14170.htm'
+    }
+    item[4].onclick = () => {
+        window.location.href = 'https://www.hnzj.edu.cn/info/1092/13964.htm'
+    }
+</script>
+
+</html>

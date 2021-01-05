@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成绩</title>
+    <style lang="">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .around {
+            display: flex;
+            justify-content: space-around;
+            background-color: #ffffff;
+            padding: 2vw 0;
+            color: #49CED0;
+        }
+        
+        li {
+            list-style: none;
+            height: 15vw;
+            line-height: 15vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .bottom {
+            border-bottom: 2px solid #49CED0;
+        }
+        
+        li div {
+            padding-left: 2vw;
+            padding-right: 2vw;
+        }
+        
+        li h2 {
+            padding-left: 2vw;
+            padding-right: 2vw;
+        }
+        
+        .mar {
+            margin-right: 1vw;
+        }
+        
+        h3 {
+            text-align: left;
+        }
+    </style>
+    <link rel="stylesheet" href="http://v3f6148422.qicp.vip/layui/layuiTablePlug/layui/src/css/layui.css">
+    <script src="http://v3f6148422.qicp.vip/layui/layuiTablePlug/layui/src/layui.js"></script>
+    <script src="http://v3f6148422.qicp.vip/js/ajax.js"></script>
+    <!-- <script src="http://v3f6148422.qicp.vip/js/vue.js"></script> -->
+</head>
+
+<body style="background-color: #ECECEC;">
+    <div style="position: fixed;top:0;width: 100%;">
+        <div style="background-color:#49CED0;color:#ffffff;padding-left: 15vw;height: 13vw;line-height: 13vw;display: flex;align-items: center;">
+            <img src="http://v3f6148422.qicp.vip/img/mobile/白色返回.png" alt="" style="position: absolute;left: 2vw;top: 2vw;width: 8vw;height:8vw;color: white;" class="cancel">
+            <span style="background-color: #ffffff;height: 7vw;width: 1px;margin-right: 5vw;"></span>
+            <h2>成绩</h2>
+        </div>
+        <div class="around">
+            <h2>平时(60%)</h2>
+            <h2>期末(40%)</h2>
+            <h2>总成绩(100)</h2>
+        </div>
+        <div style="height: 8vw;width: 100%;position: fixed;"></div>
+    </div>
+
+    <ul style="margin-top: 28vw;background-color: #ffffff;">
+
+    </ul>
+    <script>
+        var times = document.getElementsByTagName('h2')[1]
+        var end = document.getElementsByTagName('h2')[2]
+        var gross = document.getElementsByTagName('h2')[3]
+        var around = document.getElementsByClassName('around')[0]
+        var ul = document.getElementsByTagName('ul')[0]
+        end.onclick = () => {
+            end.className = 'bottom'
+            gross.className = ''
+            times.className = ''
+            ajax({
+                type: 'GET',
+                url: 'http://v3f6148422.qicp.vip',
+                path: '/selectScoreAng',
+                port: '',
+                data: {},
+                success: (data) => {
+                    console.log(data)
+                    data = JSON.parse(data)
+                    ul.innerHTML = `<li style="display:flex; justify-content: space-between;">
+                        <p style='color:#49CED0;padding-left:2vw;'>期末成绩</p>
+                        <div style="display:flex; justify-content: space-around;"><h2 class='mar'>angular</h2> <h2 class='mar'>node</h2><h2 class='mar'>bootstrap</h2></div>
+                         </li>
+                    <div style="width:100vw;height:1px;background:#dbdbdb;"></div>`
+                    for (var i = 0; i < data.length; i++) {
+                        ul.innerHTML += `
+                        <li>
+                     <div style="display:flex; justify-content: space-around;">
+                     <h3 style="font-weight:bold;">${data[i].name}</h3></div>
+                     <div style="display:flex; justify-content: space-around;  align-items: center;width:70%;">
+                        <h2>${data[i].angular}</h2>
+                        <h2>${data[i].node}</h2>
+                        <h2>${data[i].bootstrap}</h2>
+                     </li>  <div style="width:100vw;height:1px;background:#dbdbdb;"></div>`
+                    }
+
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+        times.onclick = () => {
+            end.className = ''
+            times.className = 'bottom'
+            gross.className = ''
+                // ul.innerHTML = '平时'
+            ajax({
+                type: 'GET',
+                url: 'http://v3f6148422.qicp.vip',
+                path: '/selectScore',
+                port: '',
+                data: {},
+                success: (data) => {
+                    console.log(data)
+                    data = JSON.parse(data)
+                    ul.innerHTML = ''
+                    for (var i = 0; i < data.length; i++) {
+                        ul.innerHTML += `
+                        <li>
+                     <div style="display:flex; justify-content: space-around;"><h3>${data[i].number}&nbsp;</h3>
+                     <h3 style="font-weight:bold;">${data[i].name}</h3></div>
+                     <div style="display:flex; justify-content: space-around;  align-items: center;">   <h2>${data[i].star}</h2>
+                     <img src="http://v3f6148422.qicp.vip/img/icon/星星.png" alt="" style='width:6vw;height:6vw;'></div>
+                     </li>  <div style="width:100vw;height:1px;background:#dbdbdb;"></div>`
+                    }
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+        gross.onclick = () => {
+            end.className = ''
+            times.className = ''
+            gross.className = 'bottom'
+            ajax({
+                type: 'GET',
+                url: 'http://v3f6148422.qicp.vip',
+                path: '/selectScore',
+                port: '',
+                data: {},
+                success: (data) => {
+                    // console.log(data)
+                    data = JSON.parse(data)
+                    gross.className = 'bottom'
+                    ul.innerHTML = ''
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].point == null) {
+                            data[i].point = 0
+                        }
+                        data[i].point = (data[i].star / 1000 * 60) + ((data[i].angular + data[i].node + data[i].bootstrap) / 300 * 40)
+                        data[i].point = parseInt(data[i].point)
+                        ul.innerHTML += `
+                        <li>
+                     <div style="display:flex; justify-content: space-around;">  <h3>${data[i].number}&nbsp;</h3>
+                     <h3 style="font-weight:bold;">${data[i].name}</h3></div>
+                     <h2>${data[i].point}分</h2>
+                     </li>  <div style="width:100vw;height:1px;background:#dbdbdb;"></div>`
+                    }
+                },
+                error: (err) => {
+
+                    console.log(err)
+                }
+            })
+        }
+        window.onload = () => {
+            ajax({
+                type: 'GET',
+                url: 'http://v3f6148422.qicp.vip',
+                path: '/selectScore',
+                port: '',
+                data: {},
+                success: (data) => {
+                    console.log(data)
+                    data = JSON.parse(data)
+                    gross.className = 'bottom'
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].point == null) {
+                            data[i].point = 0
+                        }
+                        data[i].point = (data[i].star / 1000 * 60) + ((data[i].angular + data[i].node + data[i].bootstrap) / 300 * 40)
+                        data[i].point = parseInt(data[i].point)
+                        ul.innerHTML += `
+                     <li>
+                     <div style="display:flex; justify-content: space-around;">  <h3>${data[i].number}&nbsp;</h3>
+                     <h3 style="font-weight:bold;">${data[i].name}</h3></div>
+                     <h2>${data[i].point}分</h2>
+                     </li>  <div style="width:100vw;height:1px;background:#dbdbdb;"></div>`
+                    }
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        }
+        var url = window.location //获取前一个页面传递的参数
+        var str = url.search.substring(1)
+        str = decodeURI(str) //decodeURI()这个方法是用来解决获取到的search参数中文百分号乱码问题
+            // console.log(decodeURI(str))
+        var uname = str
+
+        var cancel = document.getElementsByClassName('cancel')[0]
+        cancel.onclick = () => {
+            window.location.href = `http://v3f6148422.qicp.vip/stu?${uname}`
+        }
+    </script>
+</body>
+
+</html>

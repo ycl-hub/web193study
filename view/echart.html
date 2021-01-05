@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学生详细信息</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <script src="http://v3f6148422.qicp.vip/js/ajax.js"></script>
+    <script src="http://v3f6148422.qicp.vip/node_modules/echarts/dist/echarts.min.js"></script>
+</head>
+
+<body>
+    <img src="http://v3f6148422.qicp.vip/img/mobile/返回.png" alt="" style="position: absolute;left: 0;top: 0;width: 10vw;height: 10vw;" class="cancel">
+    <div id="echart" style="margin-top: 20vw;width: 100vw;height:120vw;"></div>
+    <script>
+        var url = window.location //获取前一个页面传递的参数
+        var str = url.search.substring(1)
+        str = decodeURI(str) //decodeURI()这个方法是用来解决获取到的search参数中文百分号乱码问题
+            // console.log(decodeURI(str))
+        var uname = str
+        console.log(uname)
+        var cancel = document.getElementsByClassName('cancel')[0]
+        cancel.onclick = () => {
+            window.location.href = `http://v3f6148422.qicp.vip/stu?${uname}`
+        }
+        var echart = echarts.init(document.getElementById('echart'));
+        window.onload = () => [
+            ajax({
+                type: 'POST',
+                url: 'http://v3f6148422.qicp.vip',
+                port: '',
+                path: '/queryStu',
+                data: {
+                    name: uname,
+                },
+                success: (data) => {
+                    data = JSON.parse(data)
+                    console.log(data)
+                    var option = {
+                        title: {
+                            text: '成绩分析',
+                            subtext: data[0][0].name + '的综合表现',
+                            left: 'center'
+                        },
+                        tooltip: {},
+                        toolbox: {
+
+                            　　
+                            show: true,
+
+                            　　feature: {
+
+                                　　　　
+                                saveAsImage: {
+
+                                    　　　　
+                                    show: true,
+
+                                    　　　　excludeComponents: ['toolbox'],
+
+                                    　　　　pixelRatio: 2
+
+                                    　　　　
+                                }
+
+                                　　
+                            }
+
+                        },
+                        legend: {
+                            left: 'center',
+                            top: 'bottom',
+                            data: ['综合能力(comprehensive abilities)']
+                        },
+
+                        radar: {
+                            // shape: 'circle',
+                            name: {
+                                textStyle: {
+                                    color: '#fff',
+                                    backgroundColor: '#999',
+                                    borderRadius: 3,
+                                    padding: [3, 5]
+                                }
+                            },
+                            indicator: [{
+                                name: '专业技能',
+                                max: 5
+                            }, {
+                                name: '表达能力',
+                                max: 5
+                            }, {
+                                name: '学习',
+                                max: 5
+                            }, {
+                                name: '思考力',
+                                max: 5
+                            }, {
+                                name: '执行力',
+                                max: 5
+                            }, {
+                                name: '领导力',
+                                max: 5
+                            }, {
+                                name: '纪律',
+                                max: 5
+                            }, {
+                                name: '集中力',
+                                max: 5
+                            }]
+
+                        },
+                        series: [{
+                            name: '综合 vs 评分 vs spending）',
+                            type: 'radar',
+                            // areaStyle: {normal: {}},
+                            data: [{
+                                value: [4, 3, 3, 3, 4, 5, 4, 2, 1],
+                                name: '综合能力(comprehensive abilities)'
+                            }]
+                        }]
+                    };
+                    echart.setOption(option);
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+
+            })
+        ]
+    </script>
+</body>
+
+</html>
